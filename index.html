@@ -1,0 +1,107 @@
+<!doctype html>
+<html ng-app = "shortIt" ng-controller = "NavigationController">
+	<head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+        <link href='https://fonts.googleapis.com/css?family=RobotoDraft' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel = "stylesheet" type = "text/css" href ="app/styles/ticker.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+	</head>
+	<body>
+	<div class = "w3-container w3-black" style = "height: 150px">
+		<div class = "w3-content" style = "position: relative">
+			<div class = "w3-twothird w3-container"><h2 style = "color : white"> Short It</h2></div>
+			
+			<div class = "w3-rest">
+				<span><a href = "" class = "w3-padding" ui-sref = "signUp">Sign up</a></span>
+				<span><a href = "" ui-sref = "logIn" ng-click = "logIn()" ng-hide = "loggedIn">Login</a></span>
+                <span><a href = "" ng-click = "logOut()" ng-hide = "loggedOut">Logout</a></span>
+                <span><a href = "" class = "w3-padding" ui-sref = "loadCelebrity">Load Celebrities</a></span>
+			</div>
+			<div class = "w3-container" style = "width: 100%; height: 40px; top: 130px; position: absolute">
+				<ul class="w3-navbar w3-border w3-round-xlarge w3-green w3-padding-0" style = "font-size: 14px; width: 100%">
+				<li class="w3-dropdown-hover w3-border-right w3-green">
+					<a href="#">My portofolio <i class="fa fa-caret-down"></i></a>
+					<div class="w3-dropdown-content w3-card-4 w3-green">
+					  <a href="#" ui-sref = "openTrades">View portofolio</a>
+					  <a href="#" ui-sref = "tradeHistory">Trade History</a>
+					</div>
+				</li>
+				<li class="w3-dropdown-hover w3-border-right w3-green">
+					<a href="#">On the exchange <i class="fa fa-caret-down"></i></a>
+					<div class="w3-dropdown-content w3-card-4 w3-green">
+					   <a href="#" ui-sref = "renderCelebrites">Trade Celebrities</a>
+                        <a href="#">Trade Movies</a>
+                        <a href="#">Trade Your favorite Club</a>
+					  <a href="#">Definition of terms</a>
+					  <a href="#">Tips</a>
+					</div>
+				</li>
+				<li class="w3-dropdown-hover w3-border-right w3-green">
+					<a href="#">News and Events <i class="fa fa-caret-down"></i></a>
+					<div class="w3-dropdown-content w3-card-4 w3-green">
+					  <a href="#">Market Calendar</a>
+					  <a href="#">Celebrity News and Rumors</a>
+					  <a href="#">Tips</a>
+					</div>
+				</li>
+				<li class="w3-dropdown-hover w3-border-right w3-green">
+					<a href="#">Community <i class="fa fa-caret-down"></i></a>
+					<div class="w3-dropdown-content w3-card-4 w3-green">
+					  <a href="#">Forums</a>
+					  <a href="#">LeaderBoards</a>
+					  <a href="#">Tips</a>
+					</div>
+				</li>
+				<li class="w3-dropdown-hover w3-border-right w3-green">
+					<a href="#">All about celebrities trading<i class="fa fa-caret-down"></i></a>
+					<div class="w3-dropdown-content w3-card-4 w3-green">
+					  <a href="#">Top Traders</a>
+					  <a href="#">Glossary</a>
+					  <a href="#">FAQ</a>
+					</div>
+				</li>
+				<li>
+					<a href="#">Contact Us</a>
+				</li>
+			  </ul>
+			</div>
+		</div>
+	</div>
+	<div class = "w3-container w3-light-grey" style = "">
+        <div ui-view class = "w3-content w3-section w3-container" style = "top: 40px;">
+        
+        </div>
+    </div>
+    
+    <div id = "tickerDiv" class =  "w3-container w3-black" style = "width : 100%; position : fixed; bottom : 0px">
+        <div id = "tickerDiv-child"> 
+            <ul id = "tickerUl">
+                <li ng-repeat = "celebrity in celebrities"><a >{{celebrity.celebrityName + " (" + celebrity.symbol + ") " + celebrity.history[celebrity.history.length-1].lastPrice }}</a></li>
+                <div ng-bind-html="exec()"></div>
+            </ul>
+        </div>
+        
+    </div>
+        
+
+    <script src = "app/ticker/ticker.js"></script>    
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.2/angular-ui-router.js"></script>
+    <script src="node_modules/socket.io-client/dist/socket.io.js"></script>
+    <script src = "app/app.js"></script>
+    <script src = "app/admin/load-celebrity-controller.js"></script>
+    <script src = "app/celebrityView/celebrity-view-controller.js"></script>
+    <script src = "app/signup/signup-controller.js"></script>
+    <script src = "app/login/login-controller.js"></script>
+    <script src = "app/navigation/navigation-controller.js"></script>
+    <script src = "app/main/main-controller.js"></script>
+    <script src = "app/renderCelebrities/render-celebrities-controller.js"></script>
+    <script src = "app/account-view/open-trades/open-trades-controller.js"></script>
+    <script src = "app/account-view/trade-history/trade-history-controller.js"></script>
+    
+	</body>
+    <footer class = "w3-container w3-grey" style = "height: 150px">
+
+    </footer>
+</html>

@@ -1,0 +1,24 @@
+<div class = "w3-content w3-section">
+    <div class = "w3-twothird w3-white w3-margin-right w3-round-large w3-card " style = "height: 500px">
+        <table class = "w3-table w3-striped w3-bordered w3-centered ">
+            <tr class = "">
+                <th>Name</th>
+                <th>Symbol</th>
+                <th>Current Price</th>
+                <th>Change Today</th>
+            </tr>
+            <tr ng-repeat = "celebrity in celebrities">
+                <td><a ui-sref = "celebrityView" ng-click = "celebrityName(celebrity.celebrityName)">{{celebrity.celebrityName}}</a></td>
+                <td><a ui-sref = "celebrityView">{{celebrity.symbol}}</a></td>
+                <td>{{celebrity.history[celebrity.history.length-1].lastPrice}}</td>
+                <td>Hello Darkness my old friend</td>
+            
+            </tr>
+        
+        </table>
+        
+    </div>
+    
+    <div class = "w3-rest w3-blue w3-round-large w3-card" style = "height: 500px">
+    </div>
+</div>
