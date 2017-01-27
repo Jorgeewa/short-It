@@ -1,11 +1,18 @@
-<div class = "w3-container w3-section">
+<div class = "w3-container w3-third w3-section w3-white w3-round-xlarge">
+    <h2> Sign In</h2>
+    Not a member? <a href = "">Register</a> instead.
+    <br>
+    <form>
     <div>
-        <input class = "w3-input w3-round-large w3-border" type = "text" placeholder = "Your email address or nickname" ng-model = "login.email">
-    </div>
+        <input class = "w3-input w3-round-large w3-border" type = "email" placeholder = "Your email address or nickname" ng-model = "login.email" required>
+        <label class = "w3-label w3-validate">Email Address</label>
+    </div><br>
     
     <div>
-        <input class = "w3-input w3-round-large w3-border" type = "text" placeholder = "Your password" ng-model = "login.password">
+        <input class = "w3-input w3-round-large w3-border" type = "password" placeholder = "Your password" ng-model = "login.password" required>
+        <label class = "w3-label w3-validate">Password</label>
     </div>
-    
-    <div><button class = "w3-btn w3-blue w3-round-xlarge" ng-click = "logIn()">Sign in</button></div>
+    <br>
+    <div><button class = "w3-btn w3-blue w3-round-xlarge w3-grey" ng-click = "logIn()">Sign in</button></div>
+    </form>
 </div>

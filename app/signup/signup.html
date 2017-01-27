@@ -1,15 +1,23 @@
-<div class = "w3-container w3-section">
+<div class = "w3-container w3-third w3-section w3-white w3-round-xlarge">
+    <h2>Register</h2>
+    Already a member? Please <a href = "#">login</a> instead.
+    <br>
+    <form>
     <div>
-        <input class = "w3-input w3-round-large w3-border" type = "text" placeholder = "Your email address" ng-model = "newUser.email">
-    </div>
+        <input class = "w3-input w3-round-large w3-border" type = "email" placeholder = "Your email address" ng-model = "newUser.email" required>
+        <label class = "w3-label w3-validate" >Email Address</label>
+    </div><br>
     
     <div>
-        <input class = "w3-input w3-round-large w3-border" type = "text" placeholder = "Your password" ng-model = "newUser.password">
-    </div>
+        <input class = "w3-input w3-round-large w3-border" type = "password" placeholder = "Your password" ng-model = "newUser.password" required>
+        <label class = "w3-label w3-validate">Password</label>
+    </div><br>
     
     <div>
-        <input class = "w3-input w3-round-large w3-border" type = "text" placeholder = "Your nickname" ng-model = "newUser.nickname">
+        <input class = "w3-input w3-round-large w3-border" type = "text" placeholder = "Your nickname" ng-model = "newUser.nickname" required>
+        <label class = "w3-label w3-validate">NickName</label>
     </div>
-    
-    <div><button class = "w3-btn w3-blue w3-round-xlarge" ng-click = "createUser()">Sign Me up</button></div>
+    <br>
+    <div><button class = "w3-btn w3-blue w3-round-xlarge w3-grey" ng-click = "createUser()">Register</button></div>
+    </form>
 </div>

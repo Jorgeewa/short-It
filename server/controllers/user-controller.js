@@ -1,6 +1,6 @@
 var User = require('../datasets/users');
 
-module.exports.init = function(req, res){
+module.exports.register = function(req, res){
     var num = 100000;
     var user = new User(req.body);
     console.log(user);

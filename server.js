@@ -38,7 +38,7 @@ app.post('/api/compute/price', updatePriceController.computeNewPrice);
 app.post('/api/update/price', updatePriceController.updatePrice);
 
 //create new users
-app.post('/api/user/signup', userController.init);
+app.post('/api/user/signup', userController.register);
 app.post('/api/user/login', userController.login);
 
 //render all my freaking celebrities
