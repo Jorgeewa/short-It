@@ -13,17 +13,17 @@
                 </div>
 
                 <div class = "w3-display-left">
-                    <button class = "w3-btn w3-center w3-red w3-border w3-padding-8 w3-margin w3-round-large" style = "width: 100px; font-size: 12px" ng-click = "parameters = {'type': 'sell', 'price': bid}; hideMe = false" onclick =" document.getElementById('id01').style.display='block'"><b>Sell</b></button>
+                    <button class = "w3-btn w3-center w3-red w3-border w3-padding-8 w3-margin w3-round-large" style = "width: 100px; font-size: 12px" ng-click = "parameters = {'type': 'sell', 'price': bid}; hideMe = false; checkIfLoggedIn()" onclick =" document.getElementById('id01').style.display='block'"><b>Sell</b></button>
                 </div>
                 <div class = "w3-display-right" style = "position: absolute">
-                    <button class = "w3-btn w3-center w3-blue w3-border w3-padding-8 w3-margin w3-round-large" style = "width: 100px; font-size: 12px" ng-click = "parameters = {'type': 'buy', 'price': ask}; hideMe = false" onclick =" document.getElementById('id01').style.display='block'"><b>Buy</b></button>
+                    <button class = "w3-btn w3-center w3-blue w3-border w3-padding-8 w3-margin w3-round-large" style = "width: 100px; font-size: 12px" ng-click = "parameters = {'type': 'buy', 'price': ask}; hideMe = false; checkIfLoggedIn()" onclick =" document.getElementById('id01').style.display='block'"><b>Buy</b></button>
                 </div>
 
                 <div class = "w3-display-bottomleft">
                     <button class = "w3-btn w3-center w3-red w3-border w3-padding-8 w3-margin w3-round-large" style = "width: 100px; font-size: 12px" ng-click = "parameters = {'type': 'short', 'price': bid}; hideMe = false; checkIfLoggedIn()" onclick =" document.getElementById('id01').style.display='block'"><b>Short</b></button>
                 </div>
                 <div class = "w3-display-bottomright">
-                    <button class = "w3-btn w3-center w3-blue w3-border w3-padding-8 w3-margin w3-round-large" style = "width: 100px; font-size: 12px" ng-click = "parameters = {'type': 'cover', 'price': ask}; hideMe = false" onclick =" document.getElementById('id01').style.display='block'"><b>Cover</b></button>
+                    <button class = "w3-btn w3-center w3-blue w3-border w3-padding-8 w3-margin w3-round-large" style = "width: 100px; font-size: 12px" ng-click = "parameters = {'type': 'cover', 'price': ask}; hideMe = false; checkIfLoggedIn()" onclick =" document.getElementById('id01').style.display='block'"><b>Cover</b></button>
                 </div>
                 <div id="id01" class="w3-modal" ng-hide = "hideMe">
                     <div class="w3-modal-content w3-center" style= "width: 400px">

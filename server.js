@@ -3,6 +3,7 @@ var express = require('express'),
 var app = express();
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
+var passport = require('passport');
 
 server.listen(3000, function(){
     console.log("listening at port 3000");
@@ -14,6 +15,7 @@ var moment = require('moment');//potential problem with moment
 var request = require('request');
 var cheerio = require('cheerio');
 
+
 var loadCelebrityController = require('./server/controllers/load-celebrity-controller');
 var updatePriceController = require('./server/controllers/update-price-controller');
 var userController = require('./server/controllers/user-controller');
@@ -23,11 +25,15 @@ var renderCelebrityNews = require('./server/controllers/render-celebrity-news-co
 
 mongoose.connect('mongodb://localhost:27017/shortIt');
 
-console.log(request);
-console.log(bodyParser);
+require('./server/datasets/users');
+require('./server/config/passport');
+
+app.use(passport.initialize());
 app.use(bodyParser.json());
 app.use('/app', express.static(__dirname + "/app"));
 app.use('/node_modules', express.static(__dirname + "/node_modules"));
+
+app.set('socket.io', io)
 
 //load Celebrities and get them
 app.post('/api/load/celebrity', loadCelebrityController.init);
@@ -54,4 +60,3 @@ app.get('/main', renderCelebrityNews.render);
 app.get('/', function(req, res){
    res.sendfile('index.html'); 
 });
-

@@ -1,6 +1,8 @@
 var Celebrity = require('../datasets/celebrity');
-var User = require('../datasets/users');
-var manageLifeTrades = require('./manageLifeTrades');
+var mongoose = require('mongoose');
+var User = require('../datasets/users')
+var User = mongoose.model('User');
+var ManageLifeTrades = require('./manageLifeTrades');
 
 module.exports.computeNewPrice = function(req, res){
     var quantity = req.body.quantity;
@@ -14,7 +16,7 @@ module.exports.computeNewPrice = function(req, res){
             bid = results.bid;
             ask = results.ask;
             outstandingShares = results.totalOutstanding;
-            percentageOfTotal = quantity/outstandingShares * 100;
+            percentageOfTotal = quantity/outstandingShares;
             randNumber = 0.001 * (percentageOfTotal * (Math.floor((Math.random() * 10) % 10)));
             percentageIncrement = (-0.2 * percentageOfTotal * percentageOfTotal) + (0.2 * percentageOfTotal) + randNumber;
             console.log(percentageIncrement, percentageOfTotal, outstandingShares, randNumber);
@@ -26,18 +28,23 @@ module.exports.computeNewPrice = function(req, res){
                     console.log(userData.openTrades.length, req.body.typeofTrade == 'cover');
                     accountBalance = userData.accountValue;
                     if(userData.openTrades.length > 0 && req.body.typeofTrade == 'sell'){
-                        outstandingVolumeSell = getOutstandingVolume(userData.openTrades, "buy", req);//null could be a problem here
+                        outstandingVolumeSell = getOutstandingVolume(userData.openTrades, "buy", req) || 0;//null could be a problem here
+                        console.log(outstandingVolumeSell);
+                    } else {
+                        outstandingVolumeSell = 0;
                     }
                     if(userData.openTrades.length > 0 && req.body.typeofTrade == 'cover'){
                         console.log("I ran here")
-                        outstandingVolumeCover = getOutstandingVolume(userData.openTrades, "short", req);
+                        outstandingVolumeCover = getOutstandingVolume(userData.openTrades, "short", req) || 0;
                         console.log(outstandingVolumeCover);
+                    } else {
+                        outstandingVolumeCover = 0;
                     }
                     switch(req.body.typeofTrade){
                         case "buy" :
                             ask = ask * (percentageIncrement + 1);
                             console.log(quantity, ask, quantity * ask, "I executed here", parseFloat(accountBalance) >= parseFloat(quantity) * parseFloat(ask));
-                            if(accountBalance >= quantity * ask)
+                            if(accountBalance >= quantity * ask && ask > 0)
                                 res.json({price : ask});
                             else {
                                 res.json({
@@ -48,7 +55,8 @@ module.exports.computeNewPrice = function(req, res){
 
                         case "sell" :
                             bid = bid * (1 - percentageIncrement);
-                            if(outstandingVolumeSell >= quantity && outstandingVolumeSell != null)
+                            console.log(outstandingVolumeSell)
+                            if(outstandingVolumeSell >= quantity && ask > 0)
                                 res.json({price : bid});
                             else{
                                 res.json({
@@ -59,7 +67,7 @@ module.exports.computeNewPrice = function(req, res){
 
                         case "short" :
                             bid = bid * (1 - percentageIncrement);
-                            if(accountBalance >= quantity * bid)
+                            if(accountBalance >= quantity * bid && ask > 0)
                                 res.json({price : bid});
                             else {
                                 res.json({
@@ -70,7 +78,7 @@ module.exports.computeNewPrice = function(req, res){
 
                         case "cover" :
                             ask = ask * (percentageIncrement + 1);
-                            if(outstandingVolumeCover >= quantity && outstandingVolumeCover != null)
+                            if(outstandingVolumeCover >= quantity && ask > 0)
                                 res.json({"price" : ask});
                             else {
                                 res.json({
@@ -140,12 +148,19 @@ module.exports.updatePrice = function(req, res){
                 })
             }
         });
-        manageLifeTrades = new manageLifeTrades(results, req.body);
+        manageLifeTrades = new ManageLifeTrades(results, req.body);
         manageLifeTrades.updateUserTradeHistory(req.body.userId, User);
         manageLifeTrades.stopLoss();
         manageLifeTrades.takeProfit();
+        manageLifeTrades.shockPrice(Date(), req);
         
     })
+    
+        var io = req.app.get('socket.io');
+        
+        io.emit('priceShock', {
+            bid : bid
+        })
 }
 
 getOutstandingVolume = function(trade, typeofTrade, req){
@@ -158,10 +173,11 @@ getOutstandingVolume = function(trade, typeofTrade, req){
             return filteredTrades.volume;
         }).reduce(function(mappedA, mappedB){
             return mappedA + mappedB;
-            });
+            }, 0);
 }
 
-setInterval(function(){
+/*setInterval(function(){
     manageLifeTrades.shockPrice(Date());
 }, 1000 * 60 * 60 * 3);
-console.log("i hope this guy runs only once when my server starts")
+*/
+    

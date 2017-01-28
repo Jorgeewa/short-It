@@ -4,17 +4,24 @@
             if (localStorage['User-Data']){
                 console.log("Working")
                 console.log(localStorage['User-Data']);
+                data = JSON.parse(localStorage['User-Data']);
+                console.log(data);
+                $scope.userName = data.userName;
                 $scope.loggedIn = true;
                 $scope.loggedOut = false;
                 $state.go('main');
                 } else {
                     $scope.loggedIn = false;
                     $scope.loggedOut = true;
+                    $state.go('main');
                 }
             
             $scope.$on('loggedIn', function(event, arg){
                                                 $scope.loggedOut = arg.loggedOut;
                                                 $scope.loggedIn = arg.loggedIn;
+                                                data = JSON.parse(localStorage['User-Data']);
+                                                console.log(data);
+                                                $scope.userName = data.userName;
                                                 $state.go('main'); 
                                              })
             
@@ -40,6 +47,17 @@
             
             $scope.celebrityName = function(celebrity){
                 $window.celebrityName = celebrity;
+            }
+            
+            $scope.checkIfLoggedIn = function(direction){
+                console.log(localStorage['User-Data'])
+                if(!localStorage['User-Data']){
+                    $state.go('logIn')
+                } else if(direction == 'viewPortofolio') {
+                    $state.go('openTrades');
+                } else {
+                    $state.go('tradeHistory');
+                }
             }
             
         }])

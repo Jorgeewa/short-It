@@ -1,4 +1,6 @@
-var User = require('../datasets/users');
+var mongoose = require('mongoose');
+var User = require('../datasets/users')
+var User = mongoose.model('User');
 
 module.exports.openTrades = function(req, res){
     User.findById(req.body.userId, function(error, userData){

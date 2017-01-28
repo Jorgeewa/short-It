@@ -31,6 +31,7 @@ module.exports = mongoose.model('celebrity',{
         time : Date,
         typeofTrade : String,
         price : Number,
-        volume : Number
+        volume : Number,
+        shockPriceTime : Date
     }]
 });

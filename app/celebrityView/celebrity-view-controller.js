@@ -9,7 +9,7 @@
             if (localStorage['User-Data'] !== undefined){
                 $scope.user = JSON.parse(localStorage['User-Data']);
                 console.log($scope.user);
-                console.log($scope.user.data._id)
+                console.log($scope.user._id)
             }
             var simulatePrice = function(bid, timerId){
                 bidSimulate = bid;
@@ -60,7 +60,7 @@
                     celebrityName : $window.celebrityName,
                     quantity: $scope.getQuantity,
                     typeofTrade : $scope.parameters.type,
-                    userId : $scope.user.data._id
+                    userId : $scope.user._id
                 }).then(function(success){
                     console.log(success);
                     if(success.data.price)
@@ -80,7 +80,7 @@
                     quantity: $scope.getQuantity,
                     typeofTrade : $scope.parameters.type,
                     price : $scope.indicativePrice,
-                    userId : $scope.user.data._id
+                    userId : $scope.user._id
                 }).then(function(success){
                     console.log(success)
                     bid = success.data.bid;
@@ -96,7 +96,9 @@
                 if(!$scope.user)
                     $state.go('logIn')
             }
-            $scope.celebrityName = $window.celebrityName;
+            $scope.celebrityName = $window.celebrityName || 'tuFace';
+            if(!$window.celebrityName)
+                $window.celebrityName = 'tuFace';
             
             socket.on('priceShock', function(data){
                 console.log(data);

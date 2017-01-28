@@ -1,10 +1,10 @@
 (function (){
     angular.module('shortIt')
-        .controller('LoginController', ['$scope', '$http', '$rootScope', function ($scope, $http, $rootScope){
+        .controller('LoginController', ['$scope', '$http', '$rootScope', '$window',function ($scope, $http, $rootScope, $window){
             $scope.logIn = function(){
-                console.log($scope.login);
                 $http.post('/api/user/login', $scope.login).then(function(success){
-                    localStorage.setItem('User-Data', JSON.stringify(success));
+                    data = ($window.atob(success.data.token.split('.')[1]));
+                    localStorage.setItem('User-Data', data);
                     $rootScope.$broadcast('loggedIn',{
                                             loggedIn : true,
                                             loggedOut : false

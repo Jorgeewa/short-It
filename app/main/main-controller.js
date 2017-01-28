@@ -2,8 +2,10 @@
     angular.module('shortIt')
         .controller('MainController', ['$scope', '$http', function ($scope, $http){
             if (localStorage['User-Data']){
-                console.log("Working")
                 console.log(localStorage['User-Data']);
+                data = JSON.parse(localStorage['User-Data']);
+                console.log(data);
+                $scope.userName = data.userName;
                 $scope.loggedIn = true;
                 $scope.loggedOut = false;
                 }

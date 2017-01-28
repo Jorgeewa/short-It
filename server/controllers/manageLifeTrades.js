@@ -36,46 +36,63 @@ ManageLifeTrades.prototype.takeProfit = function(){
     }) //you should work on when a user with a stop loss or take profit decides to close himself
 }
 
-ManageLifeTrades.prototype.shockPrice = function(time){
+ManageLifeTrades.prototype.shockPrice = function(time, req){
     //this function needs to execute every xhours I would go with 4 hours
-    this.celebrity.theHouse.filter(function(trade){
-        if(moment(time).diff(moment(trade.time), 'h') <= 4 && trade.typeofTrade === "buy"){
-            this.storeIfNegative.push(trade)
-        }
-    });
-    
-    var value = this.storeIfNegative.reduce(function(firstValue, secondValue){
-        value = (firstValue.price * firstValue.volume) + (secondValue.price * secondValue.volume);
-        totalVolume = firstValue.volume + secondValue.volume
-        return {
-            price : value,
-            volume : totalVolume
-        }
-    });
-    //you need to check if value is empty
-    var avgPrice = value.price/value.volume;
-    totalValue = avgPrice * value.volume;
-    currentValue = this.celebrity.history[this.celebrity.history.length - 1].lastPrice * value.volume;
-    
-    if(totalValue > currentValue)
-        return this.storeIfNegative = [];
-    else {
-        if(currentValue/totalValue < 2)
-            return this.storeIfNegative;
+    if(!this.celebrity.theHouse.shockPriceTime){
+        this.celebrity.theHouse.shockPriceTime = time;
+        this.celebrity.save();
+        return 0;
+    }
+    if(moment(time).diff(moment(this.celebrity.theHouse.shockPriceTime, 'h') >= 4)){
+        this.celebrity.theHouse.shockPriceTime = time;
+        this.celebrity.save();
+        this.celebrity.theHouse.filter(function(trade){
+            if(moment(trade.time).diff(moment(time), 'h') >= 4 && trade.typeofTrade === "buy"){
+                this.storeIfNegative.push(trade)
+            }
+        });
+        
+        var value = this.storeIfNegative.reduce(function(firstValue, secondValue){
+            value = (firstValue.price * firstValue.volume) + (secondValue.price * secondValue.volume);
+            totalVolume = firstValue.volume + secondValue.volume
+            return {
+                price : value,
+                volume : totalVolume
+            }
+        });
+            //you need to check if value is empty
+        if(!value)
+            return 0;
+            
+        var avgPrice = value.price/value.volume;
+        totalValue = avgPrice * value.volume;
+        currentValue = this.celebrity.history[this.celebrity.history.length - 1].lastPrice * value.volume;
+
+        if(totalValue > currentValue)
+            return this.storeIfNegative = [];
         else {
-            setTimer(function(){
+            if(currentValue/totalValue < 2)
+                return this.storeIfNegative;
+            else {
                 setTimer(function(){
                     setTimer(function(){
-                        this.newTimedPrices();
-                    },1000 * 60 * 30);
-                    
-                    this.newTimedPrices();
-                }, 1000 * 60 * 60);
-                
-                this.newTimedPrices();
-            }, 1000 * 60 * 60 * 2)
+                        setTimer(function(){
+                            this.newTimedPrices(req);
+                        },1000 * 60 * 30);
+
+                        this.newTimedPrices(req);
+                    }, 1000 * 60 * 60);
+
+                    this.newTimedPrices(req);
+                }, 1000 * 60 * 60 * 2)
+            }
         }
+        
+        
+    } else {
+        return 0;
     }
+    
 }
 
 ManageLifeTrades.prototype.updateUserTradeHistory = function(userId, userDatabase){
@@ -157,12 +174,12 @@ ManageLifeTrades.prototype.updateValues = function(trade){
         this.celebrity.totalOutstanding = totalOutstanding;
     }
     
-    this.celebrity.save;
+    this.celebrity.save();
     
     //remember to update House
 }
 
-ManageLifeTrades.prototype.newTimedPrices = function(){
+ManageLifeTrades.prototype.newTimedPrices = function(req){
     randNumber = Math.random() * 10;
     randNumberModulus = randNumber % 11;
     randNumberFloor = Math.floor(randNumberModulus);
@@ -175,15 +192,14 @@ ManageLifeTrades.prototype.newTimedPrices = function(){
         typeofTrade : "sell",
         volume : Math.floor(100000 * Math.random())
     });
+    this.takeProfit();
+    this.stopLoss();
+    var io = req.app.get('socket.io')
     
-    io.on('connection', function(socket){
-        console.log('we have a connection')
-        
-        socket.emit('priceShock', {
-            celebrity : this.celebrity.celebrityName,
-            bid : this.celebrity.bid
-        })
+    io.emit('priceShock', {
+        bid : this.celebrity.bid
     })
+    this.celebrity.save();
 }//find a way to send these new prices to users. I did not modify volume on purpose and I did not update House too on purpose
 
 checkSellandCover = function(userData, typeofTrade){
