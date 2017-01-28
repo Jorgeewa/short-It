@@ -1,6 +1,6 @@
 (function () {
     angular.module('shortIt')
-        .controller('CelebrityViewController', ['$scope', '$http', 'socket', '$window', function ($scope, $http, socket, $window) {
+        .controller('CelebrityViewController', ['$scope', '$http', 'socket', '$window','$state', function ($scope, $http, socket, $window, $state) {
             var bidDisplay = angular.element(document.querySelector(".bid"));
             var askDisplay = angular.element(document.querySelector(".ask"));
             var bidColorChange = angular.element(document.querySelector(".bidColorChange"));
@@ -90,6 +90,12 @@
                 })
             }
             
+            
+            $scope.checkIfLoggedIn = function(){
+                console.log($scope.user)
+                if(!$scope.user)
+                    $state.go('logIn')
+            }
             $scope.celebrityName = $window.celebrityName;
             
             socket.on('priceShock', function(data){
