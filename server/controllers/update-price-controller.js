@@ -148,7 +148,7 @@ module.exports.updatePrice = function(req, res){
                 })
             }
         });
-        tradeIdIndex = results.history[results.history.length -1].tradeId;
+        tradeIdIndex = results.history[results.history.length - 1]._id;
         manageLifeTrades = new ManageLifeTrades(results, req.body);
         manageLifeTrades.updateUserTradeHistory(req.body.userId, User, tradeIdIndex);
         manageLifeTrades.stopLoss(req.body.userId, User);
@@ -189,7 +189,8 @@ module.exports.closeOpenTrade = function(req, res){
                 typeofTrade : typeofTrade,
                 price : results.ask,
                 celebrityName : req.body.celebrityName,
-                userId : req.body.user._id
+                userId : req.body.userId,
+                tradeId : req.body.tradeId
             }
         } else {
             var totalOutstanding = parseInt(results.totalOutstanding) - parseInt(req.body.quantity);
@@ -215,12 +216,13 @@ module.exports.closeOpenTrade = function(req, res){
                 typeofTrade : typeofTrade,
                 price : results.bid,
                 celebrityName : req.body.celebrityName,
-                userId : req.body.user._id
+                userId : req.body.userId,
+                tradeId : req.body.tradeId
             }
         }
         results.save();
         manageLifeTrades = new ManageLifeTrades(results, newReq);
-        manageLifeTrades.updateUserTradeHistory(req.body.userId, User);
+        manageLifeTrades.updateOpenTrades(req.body.userId, User);
         res.json({complete : 'complete'})
 
     })
