@@ -23,54 +23,15 @@ ManageLifeTrades.prototype.stopLoss = function(userDataBase){
     })*/ //you should work on when a user with a stop loss or take profit decides to close himself
     length = this.celebrity.stopLoss.length -1;
     for(length; length >=0; length--){
-        if(this.celebrity.stopLoss[length].price <= this.celebrity.bid && this.celebrity.stopLoss.[length].typeofTrade == "buy"
-          || this.celebrity.stopLoss[length].price <= this.celebrit.ask && this.celebrity.stopLoss.[length].typeofTrade == "short"){
-            this.updateUserTradeHistory(this.celebrity.stopLoss.userId, User);
-            this.updateCelebrity(this.celebrity.stopLoss);
+        if(this.celebrity.stopLoss[length].price >= this.celebrity.bid && this.celebrity.stopLoss.[length].typeofTrade == "buy"
+          || this.celebrity.stopLoss[length].price <= this.celebrity.ask && this.celebrity.stopLoss.[length].typeofTrade == "short"){
+            this.updateOpenTrades(this.req.userId, userDataBase, {
+                quantity : celebrity.stopLoss[i].quantity,
+                typeofTrade : celebrity.stopLoss[i].typeofTrade,
+                price : (celebrity.stopLoss[i].typeofTrade == "buy") ? this.celebrity.bid : this.celebrity.ask,
+                tradeId : celebrity.stopLoss[i].tradeId
+            })
             this.celebrity.stopLoss.splice(index,1);
-            
-        userDatabase.findById(userId, function(error, userData){
-        if(error){
-            console.log(error);
-        } else {
-            userData.history.push({
-                time : Date(),
-                celebrity : self.celebrity.celebrityName,
-                price : self.req.price,
-                typeofTrade : self.req.typeofTrade,
-                volume : self.req.quantity
-            });
-            if(self.req.typeofTrade == "sell" || self.req.typeofTrade == "cover"){
-                userData.accountValue = parseFloat(userData.accountValue) + parseFloat(self.req.price * self.req.quantity);
-                switch(self.req.typeofTrade){
-                    case "sell" :
-                        checkSellandCover(userData, 'buy', self);
-                        removeStops(self.celebrity, userId, 'sell');
-                        removeTakeProfits(self.celebrity, userId, 'sell');
-                        break;
-                    case "cover" :
-                        checkSellandCover(userData, 'short', self);
-                        removeStops(self.celebrity, userId, 'cover');
-                        removeTakeProfits(self.celebrity, userId, 'cover');
-                        break;
-                }
-                
-            } else {
-                userData.accountValue = parseFloat(userData.accountValue) - parseFloat(self.req.price * self.req.quantity);
-                userData.openTrades.push({
-                    time : Date(),
-                    celebrity : self.celebrity.celebrityName,
-                    price : self.req.price,
-                    typeofTrade : self.req.typeofTrade,
-                    volume : self.req.quantity
-                })
-                
-                userData.save();
-            }
-            
-        }
-    })
-        }
     }
     
 }
@@ -78,14 +39,18 @@ ManageLifeTrades.prototype.stopLoss = function(userDataBase){
 ManageLifeTrades.prototype.takeProfit = function(){
     //only gets called if we hava a buy or short order
     console.log("I ran in the take profit");
-    this.celebrity.takeProfit.filter(function(trade, index){
-        if(trade.price >= this.celebrity.bid && trade.typeofTrade === "buy" 
-        || trade.price <= this.celebrity.ask && trade.typeofTrade === "short"){
-            this.updateUserTradeHistory(trade, trade.takeProfit.userId);
-            this.updateCelebrity(trade);
+    length = this.celebrity.takeProift.length -1;
+    for(length; length >=0; length--){
+        if(this.celebrity.[length].price <= this.celebrity.bid && this.celebrity.takeProfit.[length].typeofTrade == "buy"
+          || this.celebrity.takeProfit[length].price >= this.celebrity.ask && this.celebrity.takeProfit.[length].typeofTrade == "short"){
+            this.updateOpenTrades(this.req.userId, userDataBase, {
+                quantity : celebrity.takeProfit[i].quantity,
+                typeofTrade : celebrity.takeProfit[i].typeofTrade,
+                price : (celebrity.takeProfit[i].typeofTrade == "buy") ? this.celebrity.bid : this.celebrity.ask,
+                tradeId : celebrity.takeProfit[i].tradeId
+            })
             this.celebrity.takeProfit.splice(index,1);
-        }
-    }) //you should work on when a user with a stop loss or take profit decides to close himself
+    }
 }
 
 ManageLifeTrades.prototype.shockPrice = function(time, req){
@@ -224,9 +189,9 @@ ManageLifeTrades.prototype.updateCelebrity = function(trade){
     
     //remember to update House
 }
-ManageLifeTrade.prototype.updateOpenTrades = function(userId, userDataBase){
-    removeStops(this.celebrity, this.req.userId, this.req.typeofTrade, this.req.tradeId);
-    removeTakeProfits(this.celebrity, this.req.userId, this.req.typeofTrade, this.req.tradeId);
+ManageLifeTrade.prototype.updateOpenTrades = function(userId, userDataBase, req){
+    //removeStops(this.celebrity, this.req.userId, this.req.typeofTrade, this.req.tradeId);
+    //removeTakeProfits(this.celebrity, this.req.userId, this.req.typeofTrade, this.req.tradeId);
     self = this;
     userDatabase.findById(userId, function(error, userData){
         if(error){
@@ -235,22 +200,22 @@ ManageLifeTrade.prototype.updateOpenTrades = function(userId, userDataBase){
             userData.history.push({
                 time : Date(),
                 celebrity : self.celebrity.celebrityName,
-                price : self.req.price,
-                typeofTrade : self.req.typeofTrade,
-                volume : self.req.quantity
+                price : req.price,
+                typeofTrade : req.typeofTrade,
+                volume : .req.quantity
             });
-            if(self.req.typeofTrade == "sell" || self.req.typeofTrade == "cover"){
-                userData.accountValue = parseFloat(userData.accountValue) + parseFloat(self.req.price * self.req.quantity);
-                switch(self.req.typeofTrade){
-                    case "sell" :
-                        checkSellandCover(userData, 'buy', self, self.req.tradeId);
-                        removeStops(self.celebrity, userId, 'sell', self.req.tradeId);
-                        removeTakeProfits(self.celebrity, userId, 'sell', self.req.tradeId);
+            if(req.typeofTrade == "buy" || req.typeofTrade == "short"){
+                userData.accountValue = parseFloat(userData.accountValue) + parseFloat(req.price * req.quantity);
+                switch(req.typeofTrade){
+                    case "buy" :
+                        checkSellandCover(userData, 'buy', self, req.tradeId);
+                        removeStops(self.celebrity, userId, 'sell', req.tradeId);
+                        removeTakeProfits(self.celebrity, userId, 'sell', req.tradeId);
                         break;
-                    case "cover" :
-                        checkSellandCover(userData, 'short', self, self.req.tradeId);
-                        removeStops(self.celebrity, userId, 'cover', self.req.tradeId);
-                        removeTakeProfits(self.celebrity, userId, 'cover', self.req.tradeId);
+                    case "short" :
+                        checkSellandCover(self.req.userData, 'short', self, req.tradeId);
+                        removeStops(self.celebrity, self.req.userId, 'cover', req.tradeId);
+                        removeTakeProfits(self.celebrity, self.req.userId, 'cover', req.tradeId);
                         break;
                 }
                 
