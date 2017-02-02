@@ -229,7 +229,7 @@ module.exports.closeOpenTrade = function(req, res){
         }
         results.save();
         manageLifeTrades = new ManageLifeTrades(results, newReq);
-        manageLifeTrades.updateOpenTrades(req.body.userId, User);
+        manageLifeTrades.updateOpenTrades(req.body.userId, User, newReq);
         res.json({complete : 'complete'})
 
     })
