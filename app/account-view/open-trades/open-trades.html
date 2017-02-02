@@ -17,7 +17,7 @@
                 <td>{{openTrade.celebrity}}</td>
                 <td>{{openTrade.volume}}</td>
                 <td>{{openTrade.price}}</td>
-                <td ng-click = "close(openTrade.typeofTrade, openTrade.celebrity, openTrade.volume)"><button class = "w3-btn w3-round-large w3-blue"> Close</button> </td>
+                <td ng-click = "close(openTrade.typeofTrade, openTrade.celebrity, openTrade.volume, openTrade.tradeId)"><button class = "w3-btn w3-round-large w3-blue"> Close</button> </td>
                 <td ng-hide= "openTrade.stopLoss" ><button class = "w3-btn w3-round-large w3-blue" ng-click = "parameters = {'type': 'stopLoss', 'price': ask}; hideMe = false;" onclick =" document.getElementById('id01').style.display='block'">Set SL</button> </td>
                 <td ng-show= "openTrade.stopLoss">{{openTrade.stopLoss}} </td>
                 <td ng-hide = "openTrade.takeProfit" ><button class = "w3-btn w3-round-large w3-blue" ng-click = "parameters = {'type': 'takeProfits', 'price': ask}; hideMe = false;" onclick =" document.getElementById('id01').style.display='block'">Set TP</button> </td>
