@@ -148,8 +148,9 @@ module.exports.updatePrice = function(req, res){
                 })
             }
         });
+        tradeIdIndex = results.history[results.history.length -1].tradeId;
         manageLifeTrades = new ManageLifeTrades(results, req.body);
-        manageLifeTrades.updateUserTradeHistory(req.body.userId, User);
+        manageLifeTrades.updateUserTradeHistory(req.body.userId, User, tradeIdIndex);
         manageLifeTrades.stopLoss(req.body.userId, User);
         manageLifeTrades.takeProfit(User);
         manageLifeTrades.shockPrice(Date(), req);
