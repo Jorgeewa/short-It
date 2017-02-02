@@ -151,7 +151,7 @@ module.exports.updatePrice = function(req, res){
         tradeIdIndex = results.history[results.history.length - 1]._id;
         manageLifeTrades = new ManageLifeTrades(results, req.body);
         manageLifeTrades.updateUserTradeHistory(req.body.userId, User, tradeIdIndex);
-        manageLifeTrades.stopLoss(req.body.userId, User);
+        manageLifeTrades.stopLoss(User);
         manageLifeTrades.takeProfit(User);
         manageLifeTrades.shockPrice(Date(), req);
         
@@ -230,6 +230,8 @@ module.exports.closeOpenTrade = function(req, res){
         results.save();
         manageLifeTrades = new ManageLifeTrades(results, newReq);
         manageLifeTrades.updateOpenTrades(req.body.userId, User, newReq);
+        manageLifeTrades.stopLoss(User);
+        manageLifeTrades.takeProfit(User);
         res.json({complete : 'complete'})
 
     })
