@@ -275,6 +275,7 @@ module.exports.setStopsTakeProfits = function(req, res){
                 })
             }
             
+            results.save();
             res.json({success: "it was successful"});
         }
     })
