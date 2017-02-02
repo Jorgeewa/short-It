@@ -167,8 +167,14 @@ module.exports.updatePrice = function(req, res){
 module.exports.closeOpenTrade = function(req, res){
     Celebrity.find({celebrityName : req.body.celebrityName}, function(error, results){
         results = results[0];
+            outstandingShares = results.totalOutstanding;
+            percentageOfTotal = quantity/outstandingShares;
+            randNumber = 0.001 * (percentageOfTotal * (Math.floor((Math.random() * 10) % 10)));
+            percentageIncrement = (-0.2 * percentageOfTotal * percentageOfTotal) + (0.2 * percentageOfTotal) + randNumber;
         if(req.body.typeofTrade == "short"){
             var totalOutstanding = parseInt(results.totalOutstanding) + parseInt(req.body.quantity);
+            results.ask = results.ask * (1 + percentageIncrement);
+            results.bid = results.ask - 2.02;
             results.totalOutstanding = totalOutstanding;
             var typeofTrade = 'cover';
             results.history.push({
@@ -194,7 +200,8 @@ module.exports.closeOpenTrade = function(req, res){
             }
         } else {
             var totalOutstanding = parseInt(results.totalOutstanding) - parseInt(req.body.quantity);
-            console.log(totalOutstanding);
+            results.bid = results.bid * (percentageIncrement - 1);
+            results.ask = parseInt(results.bid) + 2.02;
             results.totalOutstanding = totalOutstanding;
             var typeofTrade = 'sell';
             results.history.push({
