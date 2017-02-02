@@ -281,6 +281,7 @@ checkSellandCover = function(userData, typeofTrade, self){
         console.log(trade, userData.openTrades);
         userData.openTrades.push({
             time : Date(),
+            tradeId : self.req.tradeId,
             celebrity : self.celebrity.celebrityName,
             price : self.req.price,
             typeofTrade : typeofTrade,
