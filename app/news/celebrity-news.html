@@ -1,0 +1,11 @@
+<div class = "w3-content w3-section" >
+    <!--- <div class = "w3-twothird w3-white w3-margin-right w3-round-large w3-card" style = "height: 500px"></div>
+    <div class = "w3-rest w3-blue w3-round-large w3-card" style = "height: 500px"></div>-->
+    
+    <div   ng-repeat = "newsItem in newsItems" style = "display : inline-block; vertical-align: bottom; padding : 5px">
+        <div class = "w3-round-large w3-white w3-card" style = " height : 200px;">
+            <div><image class = "w3-round-large w3-white w3-card" src = {{newsItem.image}} style = "width : 224px; height : 126px;"></image></div>
+            <div style = "width : 224px"><a href = {{newsItem.href}}>{{newsItem.artiste}}</a></div>
+        </div>
+    </div>
+</div>

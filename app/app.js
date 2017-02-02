@@ -57,6 +57,20 @@
             templateUrl : "app/account-view/trade-history/trade-history.html",
             controller : "TradeHistoryController"
         })
+        
+        $stateProvider
+            .state('accountBalance', {
+            url : "/account-balance",
+            templateUrl : "app/account-view/account-balance/account-balance.html",
+            controller : "AccountBalanceController"
+        })
+        
+        $stateProvider
+            .state('celebNews', {
+            url: "/celebrity-news",
+            templateUrl : "app/news/celebrity-news.html",
+            controller : "CelebrityNewsController"
+        })
     })
     
     //.service('$ticker', $ticker)

@@ -24,6 +24,8 @@ var showAccountDetailsController = require('./server/controllers/show-account-de
 var renderCelebrityNews = require('./server/controllers/render-celebrity-news-controller');
 
 mongoose.connect('mongodb://localhost:27017/shortIt');
+//mongoose.connect('mongodb://heroku_6j09bfdg:58r3cd70mq1om5cd9hju6fk87r@ds041586.mlab.com:41586/heroku_6j09bfdg');
+
 
 require('./server/datasets/users');
 require('./server/config/passport');
@@ -42,6 +44,9 @@ app.post('/api/price/get', loadCelebrityController.getPrices);
 //calculate prices and update them
 app.post('/api/compute/price', updatePriceController.computeNewPrice);
 app.post('/api/update/price', updatePriceController.updatePrice);
+app.post('/api/close', updatePriceController.closeOpenTrade);
+app.post('/api/checkError', updatePriceController.checkError);
+app.post('/api/setStops&TakeProfits', updatePriceController.setStopsTakeProfits);
 
 //create new users
 app.post('/api/user/signup', userController.register);
@@ -53,6 +58,7 @@ app.get('/api/render/celebrites', renderCelebritiesController.render);
 //get open trades
 app.post('/api/view/open-trades', showAccountDetailsController.openTrades);
 app.post('/api/view/trade-history', showAccountDetailsController.tradeHistory);
+app.post('/api/view/account-balance', showAccountDetailsController.accountBalance);
 
 //render news on main page
 app.get('/main', renderCelebrityNews.render);

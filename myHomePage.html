@@ -3,17 +3,16 @@
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="app/styles/w3school.css">
-        <link rel = "stylesheet" href = "app/styles/mainStyles.css">
         <link href='https://fonts.googleapis.com/css?family=RobotoDraft' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel = "stylesheet" type = "text/css" href ="app/styles/ticker.css">
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 	<body>
-		<div class = "mainWrap w3-container w3-padding-0">
-			<div class = "logo-login w3-row">
-				<div class = "logo  w3-third w3-container w3-col"><img src = "app/pictures/shortIt.png"></div>
-				<div class = "middle w3-third w3-container w3-col">
-					<div class = "hot-topics w3-content">
+		<div class = "mainWrap w3-container  w3-padding-0">
+			<div class = "logo-login">
+				<div class = "logo  w3-quarter"><img src = "file:///C:/Users/Jorgeewa/Desktop/short-It/shortIt.png"></div>
+				<div class = "middle w3-half">
+					<div class = "hot-topics">
 						<div class = "realign">
 							<span class = "realigned">Hot Topics:</span>
 						</div>
@@ -21,23 +20,23 @@
 						<a href = "#">Celebrity News</a>
 					</div>
 				</div>
-				<div class = "short-it-login w3-third w3-col w3-container">
+				<div class = "short-it-login w3-quarter">
 					<div class = "welcome-user" ng-hide = "loggedOut">Welcome {{userName}}</div>
 					<div><a href = "" class = "authentication-area" ng-click = "logOut()" ng-hide = "loggedOut"><span class = "realigned">Logout</span></a></div>
-					<div ><a href = "#" class = "authentication-area" ui-sref = "signUp" ng-hide = "loggedIn"><span class = "realigned">Sign up</span></a><span ng-hide = "loggedIn"> Or </span></div>
+					<div ><a href = "#" class = "authentication-area" ui-sref = "signUp" ng-hide = "loggedIn"><span class = "realigned">Sign up</span></a><span> Or </span></div>
 					
 					<div ><a href = "#" class = "authentication-area" ui-sref = "logIn" ng-click = "logIn()" ng-hide = "loggedIn"><span class = "realigned">Log In</span></a></div>
 					
 				</div>
 			</div>
-			<ul class = "ul-container w3-content">
+			<ul class = "ul-container">
 				<li class = "li-container">
-					<a  class = "dropdown" href="https://powerful-shelf-45643.herokuapp.com/#/">Home</a>
+					<a  class = "dropdown" href="#">Home</a>
 				</li>
 				<li class = "li-container">
 					<a  class = "dropdown" href="#">My portofolio <i class="fa fa-caret-down"></i></a>
 					<div class = "dropdown-content">
-						<a href="#" ng-click = "checkIfLoggedIn('viewPortofolio')" >View portofolio</a>
+						<a href="#" ng-click = "checkIfLoggedIn('viewPorotofolio')" >View portofolio</a>
 						<a href="#" ng-click = "checkIfLoggedIn('tradeHistory')">Trade History</a>
                         <a href="#" ng-click = "checkIfLoggedIn('accountBalance')">Account Balance</a>
 					</div>
@@ -48,7 +47,7 @@
 						<a href="#" ui-sref = "renderCelebrites">Trade Celebrities</a>
                         <a href="#">Trade Movies</a>
                         <a href="#">Trade Your favorite Club</a>
-						<a href="# " ui-sref = "celebNews">Celebrity News and Rumors</a>
+						<a href="#">Celebrity News and Rumors</a>
 						<a href="#">Tips</a>
 					</div>
 				</li>
@@ -83,7 +82,7 @@
         </div>
     </div>
     
-    <div id = "tickerDiv" class =  "w3-container w3-black w3-border w3-border-white" style = "width : 100%; position : fixed; bottom : 0px">
+    <div id = "tickerDiv" class =  "w3-container w3-black" style = "width : 100%; position : fixed; bottom : 0px">
         <div id = "tickerDiv-child"> 
             <ul id = "tickerUl">
                 <li ng-repeat = "celebrity in celebrities"><a >{{celebrity.celebrityName + " (" + celebrity.symbol + ") " + celebrity.history[celebrity.history.length-1].lastPrice }}</a></li>
@@ -108,20 +107,9 @@
     <script src = "app/account-view/open-trades/open-trades-controller.js"></script>
     <script src = "app/account-view/trade-history/trade-history-controller.js"></script>
     <script src = "app/account-view/account-balance/account-balance-controller.js"></script>
-    <script src = "app/news/celebrity-news-controller.js"></script>
     
 	</body>
-    <footer class = "w3-container w3-padding-0" style = "height: 150px; background-color:#424242;">
-        <div class = "w3-container w3-black" style = "height: 40px; width: 100%">
-            <div class = "w3-quarter" style = "height: 40px; width: 10%"><img src = "app/pictures/shortIt.png" style = "width : 70%; height: 100%"></div>
-            <div style = "float: right; margin-top: 0.5%">
-                <span><a href = ""><i class="fa fa-facebook"></i></a></span>
-                <span><a href = ""><i class="fa fa-twitter"></i></a></span>
-                <span><a href = ""><i class="fa fa-google-plus"></i></a></span>
-            </div>
-        </div>
-        <div style = "color: white; margin-left: 35%" class = "w3-container">
-            <a href = "#">About us</a><span>|</span><a href = "#">Contact us</a><span>|</span><a href = "#">General Feedback</a>
-        </div>
+    <footer class = "w3-container w3-grey" style = "height: 150px">
+
     </footer>
 </html>

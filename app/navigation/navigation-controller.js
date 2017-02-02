@@ -55,8 +55,10 @@
                     $state.go('logIn')
                 } else if(direction == 'viewPortofolio') {
                     $state.go('openTrades');
-                } else {
+                } else if(direction == 'tradeHistory') {
                     $state.go('tradeHistory');
+                } else if(direction  == 'accountBalance'){
+                    $state.go('accountBalance')
                 }
             }
             

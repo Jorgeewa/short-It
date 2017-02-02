@@ -2,7 +2,7 @@
     <div class = "w3-twothird w3-white w3-margin-right w3-round-large w3-card " style = "height: 500px">This is {{celebrityName}}
     </div>
     <div class = "w3-content w3-rest" style = "height: 500px"> 
-        <div class="w3-card-16 w3-round-xlarge" style="width:250px;" ng-init ="unHideMe = true">
+        <div class="w3-card-16 w3-round-xlarge" style="width:250px;" ng-init ="unHideMeSuccess = true; unHideMeError = true">
             <img src="http://www.w3schools.com/w3css/img_avatar5.png" alt="Person" style="width:100%">
             <div class = "w3-container w3-card-4 w3-display-containter w3-black w3-border" style = "height: 200px; position: relative;">
                 <div class ="w3-display-topleft">
@@ -35,18 +35,25 @@
                         <body>
                       <div class="w3-container w3-blue">
                           <input ng-model = "getQuantity" type = "text" class = "w3-input" placeholder = "type in the quantity desired" required>
-                          <button ng-click ="hideMe = true; unHideMe = false; computeNewPrice()" >Submit</button>
+                          <button ng-click ="hideMe = true; computeNewPrice()" >Submit</button>
                       </div>
                         </body>
                     </div>
                 </div>
-                <div>    
-                    <div class="w3-modal-content w3-yellow w3-center" ng-hide = "unHideMe" style = "margin: 0 auto; width: 200px; top: -200px">
-                        <span ng-click = "unHideMe = true" onclick="this.parentElement.style.display='none'" class="w3-closebtn w3-hover-text-red">&times;</span>
+                <div id = "success">    
+                    <div class="w3-modal-content w3-yellow w3-center" style = "margin: 0 auto; width: 200px; top: -200px">
+                        <span ng-click = "hideMe = false; displayHandler()" class="w3-closebtn w3-hover-text-red">&times;</span>
                         <h3>Warning!</h3>
-                        <p ng-init = "indicativePrice = 0">You are about to {{parameters.type + " " + getQuantity + " units of... for " +  indicativePrice}}</p>
-                        <button ng-click ="hideMe = true; unHideMe = true; updatePrices()" class = "w3-btn" >Submit</button>
-                        <button ng-click ="hideMe = false; unHideMe = true" class = "w3-btn" >Cancel</button>
+                        <p ng-init = "indicativePrice = 0">You are about to {{parameters.type + " " + getQuantity + " units of " + celebrityName + " for " +  indicativePrice}}</p>
+                        <button ng-click ="hideMe = true; displayHandler(); updatePrices()" class = "w3-btn" >Submit</button>
+                        <button ng-click ="hideMe = false; displayHandler()" class = "w3-btn" >Cancel</button>
+                    </div>
+                </div>
+                <div id = "error" >
+                    <div  class="w3-modal-content w3-yellow w3-center" style = "margin: 0 auto; width: 200px; top: -200px">
+                        <span ng-click = "hideMe = false; displayHandler()" class="w3-closebtn w3-hover-text-red">&times;</span>
+                        <h3>Warning!</h3>
+                        <p>{{errorMessage}}</p>
                     </div>
                 </div>
 

@@ -18,5 +18,14 @@ module.exports.tradeHistory = function(req, res){
             console.log(error)
         else
             res.json({user : userData});
-    })
+    });
+}
+
+module.exports.accountBalance = function(req, res){
+    User.findById(req.body.userId, function(error, userData){
+        if(error)
+            console.log(error)
+        else
+            res.json({user : userData});
+    });
 }

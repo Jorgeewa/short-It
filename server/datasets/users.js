@@ -25,7 +25,9 @@ var userSchema = new mongoose.Schema({
         celebrity : String,
         price : Number,
         typeofTrade : String,
-        volume : Number
+        volume : Number,
+        stopLoss : Number,
+        takeProfit : Number
     }]
 });
 

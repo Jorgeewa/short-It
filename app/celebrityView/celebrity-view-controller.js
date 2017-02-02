@@ -3,9 +3,12 @@
         .controller('CelebrityViewController', ['$scope', '$http', 'socket', '$window','$state', function ($scope, $http, socket, $window, $state) {
             var bidDisplay = angular.element(document.querySelector(".bid"));
             var askDisplay = angular.element(document.querySelector(".ask"));
+            var successDisplay = angular.element(document.getElementById("success"));
+            var errorDisplay = angular.element(document.getElementById("error"));
             var bidColorChange = angular.element(document.querySelector(".bidColorChange"));
             var askColorChange = angular.element(document.querySelector(".askColorChange"));
             var timerId;
+            
             if (localStorage['User-Data'] !== undefined){
                 $scope.user = JSON.parse(localStorage['User-Data']);
                 console.log($scope.user);
@@ -55,7 +58,12 @@
             });
             
             $scope.computeNewPrice = function(){
-                console.log("firing");
+                convertToInt = parseInt($scope.getQuantity);
+                if(isNaN($scope.getQuantity) || $scope.getQuantity.toString().indexOf('.') != -1 || convertToInt<1){
+                    $scope.errorMessage = "Quantity must be an integer greater than or equal to 1"
+                    errorDisplay[0].style.display = "block";
+                    return 0;
+                }
                 $http.post('/api/compute/price', {
                     celebrityName : $window.celebrityName,
                     quantity: $scope.getQuantity,
@@ -63,10 +71,14 @@
                     userId : $scope.user._id
                 }).then(function(success){
                     console.log(success);
-                    if(success.data.price)
+                    if(success.data.price){
                         $scope.indicativePrice = success.data.price.toFixed(2);
-                    else{
+                        successDisplay[0].style.display = "block";
+                    } else {
                         console.log(success.data.error);
+                        $scope.errorMessage = success.data.error;
+                        errorDisplay[0].style.display = "block";
+                        console.log('fired unHideMeError', $scope.unHideMeError, error);
                     }
                 }).catch(function(error){
                     console.log(error)
@@ -96,6 +108,12 @@
                 if(!$scope.user)
                     $state.go('logIn')
             }
+            
+            $scope.displayHandler = function(){
+                errorDisplay[0].style.display = "none";
+                successDisplay[0].style.display = "none";
+            }
+            $scope.displayHandler();
             $scope.celebrityName = $window.celebrityName || 'tuFace';
             if(!$window.celebrityName)
                 $window.celebrityName = 'tuFace';

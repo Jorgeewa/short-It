@@ -1,0 +1,184 @@
+
+
+html {
+	 font-family: Arial,Helvetica,sans-serif;
+}
+body {
+	background : #eaecef
+}
+.mainWrap {
+	background-color : #009ec2;
+}
+
+/*.logo-login {
+	height: 75px;
+}	*/
+
+.logo {
+  position: relative;
+  left: -25px;
+  z-index: 1;
+  background: #000;
+  color: #009ec2;
+  -webkit-transform: skew(-20.4deg);
+}
+
+
+.logo img {
+	width : 80%;
+	height : 80%;
+	-webkit-transform: skew(20.4deg);
+	transform: skew(20.4deg);
+}
+
+/*.middle {
+	height: 75px;
+}*/
+
+.hot-topics {
+	line-height : normal;
+	font-weight : bold;
+	color: #fff;
+	font-size: 13px;
+}
+
+.realign {
+	-webkit-transform: skewX(-20.4deg);
+	transform: skewX(-20.4deg);
+	background-color : #00788a;
+	text-align: center;
+	padding : 5px 8px;
+	display: inline-block;
+	border-radius : 3px;
+}
+
+span.realigned {
+	display: inline-block;
+	-webkit-transform: skewX(20.4deg);
+	transform: skewX(20.4deg);
+}
+/*.hot-topics span, a {
+	display: inline-block;
+	-webkit-transform: skew(20.4deg);
+	transform: skew(20.4deg);
+}*/
+
+.short-it-login {
+	line-height : normal;
+	font-weight : bold;
+	color: #fff;
+	font-size: 13px;
+}
+
+.short-it-login div {
+	padding : 0;
+	display: inline-block;
+}
+
+.authentication-area {
+	display: inline-block;
+	-webkit-transform: skew(-20.4deg);
+	transform: skew(-20.4deg);
+	text-decoration: none;
+	background-color : #fff;
+	color: #6cb33f;
+	text-align: center;
+	padding : 5px 8px;
+	border-radius : 3px;
+	font-size: 13px;
+	line-height : normal;
+	font-weight : bold;
+}
+
+.authentication-area:hover {
+	background-color: #6cb33f;
+	color: #fff;
+}
+
+div.welcome-user {
+	color: #fff;
+	font-size: 13px;
+	line-height : normal;
+	font-weight : bold;
+}
+
+.short-it-login span {
+	display: inline-block;
+
+}
+
+.ul-container {
+	background-color : #009ec2;
+	border : 1px solid #47c3d3;
+	display : block;
+	text-align : center;
+	color: #fff;
+	line-height : normal;
+	font-weight : bold;
+	list-style: none;
+	padding : 0;
+	font-size: 0;
+}
+
+.li-container {
+	display : inline-block;
+	-webkit-transform: skewX(-20.4deg);
+	transform: skew(-20.4deg);
+	list-style: none;
+	line-height: 1.5;
+	text-align : center;
+	border : 1px solid #47c3d3;
+	border-width : 0 0 0 1px;
+	position: relative;
+}
+
+.li-container:last-child {
+	border : 1px solid #47c3d3;
+	border-width : 0 1px 0 1px;
+}
+
+.dropdown {
+	font-size: 13px;
+	display : inline-block;
+	-webkit-transform: skewX(20.4deg);
+	transform: skew(20.4deg);
+	text-decoration: none;
+	/*padding : 9px 45px 5px 45px;*/
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+	display : none;
+    position: absolute;
+    background-color: #009ec2;
+    min-width: 250px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+	font-weight : bold;
+	font-size: 13px;
+	left: 10%;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: grey}
+
+/* Show the dropdown menu on hover */
+.li-container:hover div.dropdown-content {
+    display: block;
+	-webkit-transform: skewX(20.4deg);
+	transform: skew(20.4deg);
+}
+
+.li-container:hover {
+	background-color : black;
+}
+
+

@@ -17,7 +17,7 @@ ManageLifeTrades.prototype.stopLoss = function(){
         if (trade.price <= this.celebrity.bid && trade.typeofTrade === "buy"
         || trade.price >= this.celebrity.ask && trade.typeofTrade === "short"){
             this.updateUserTradeHistory(trade, trade.stopLoss.userId);
-            this.updateValues(trade);
+            this.updateCelebrity(trade);
             this.celebrity.stopLoss.splice(index,1);
         }
     }) //you should work on when a user with a stop loss or take profit decides to close himself
@@ -30,7 +30,7 @@ ManageLifeTrades.prototype.takeProfit = function(){
         if(trade.price >= this.celebrity.bid && trade.typeofTrade === "buy" 
         || trade.price <= this.celebrity.ask && trade.typeofTrade === "short"){
             this.updateUserTradeHistory(trade, trade.takeProfit.userId);
-            this.updateValues(trade);
+            this.updateCelebrity(trade);
             this.celebrity.takeProfit.splice(index,1);
         }
     }) //you should work on when a user with a stop loss or take profit decides to close himself
@@ -113,9 +113,13 @@ ManageLifeTrades.prototype.updateUserTradeHistory = function(userId, userDatabas
                 switch(self.req.typeofTrade){
                     case "sell" :
                         checkSellandCover(userData, 'buy', self);
+                        removeStops(self.celebrity, userId, 'sell');
+                        removeTakeProfits(self.celebrity, userId, 'sell');
                         break;
                     case "cover" :
                         checkSellandCover(userData, 'short', self);
+                        removeStops(self.celebrity, userId, 'cover');
+                        removeTakeProfits(self.celebrity, userId, 'cover');
                         break;
                 }
                 
@@ -136,19 +140,8 @@ ManageLifeTrades.prototype.updateUserTradeHistory = function(userId, userDatabas
     })
 }
 
-/*manageLifeTrade.updateTrades.prototype = function(){
-    //reduce quantity previously opened and update stop loss and take profit
-}*/ //no longer needed
 
-/*manageLifeTrade.removeStopsAndTP.prototype = function(trade, userId){
-    //for situations where user just closes the trade himself
-    celebrity.stopLoss.filter(function(trade){
-        if(trade.userId = userId)
-            return index;
-    })   
-}*/
-
-ManageLifeTrades.prototype.updateValues = function(trade){
+ManageLifeTrades.prototype.updateCelebrity = function(trade){
     //should not be able to place stops in between my spread
     var tradeDirection = (trade.typeofTrade == "buy") ? "sell" : "cover";
     
@@ -202,15 +195,17 @@ ManageLifeTrades.prototype.newTimedPrices = function(req){
     this.celebrity.save();
 }//find a way to send these new prices to users. I did not modify volume on purpose and I did not update House too on purpose
 
-checkSellandCover = function(userData, typeofTrade){
-    console.log(typeofTrade)
+checkSellandCover = function(userData, typeofTrade, self){
+    console.log(typeofTrade, self.req.celebrityName, self.celebrity.celebrityName);
     trade = userData.openTrades.filter(function(trades){
-        if(self.celebrity.celebrityName == self.req.celebrityName && trades.typeofTrade == typeofTrade)
-            return trades; 
+        if(trades.celebrity == self.req.celebrityName && trades.typeofTrade == typeofTrade){
+            console.log(trades);
+            return trades;
+        }
     }).map(function(filteredTrades){
         return filteredTrades.volume;
     }).reduce(function(mappedA, mappedB){
-        return mappedA + mappedB
+        return parseInt(mappedA) + parseInt(mappedB);
     });
     console.log(trade, self.req.quantity, trade == self.req.quantity);
     if(parseInt(trade) == parseInt(self.req.quantity)){
@@ -219,24 +214,25 @@ checkSellandCover = function(userData, typeofTrade){
             console.log(userData.openTrades[i].celebrity, self.req.celebrityName,userData.openTrades[i].typeofTrade);
             if(userData.openTrades[i].celebrity == self.req.celebrityName && userData.openTrades[i].typeofTrade == typeofTrade){
                 userData.openTrades.splice(i, 1);
-                console.log(i);
             }
-        }
+        };
+    userData.save();
     } else {
         for(var i = userData.openTrades.length -1; i >= 0; i--){
             console.log('I ran here')
             console.log(userData.openTrades[i].celebrity, self.req.celebrityName,userData.openTrades[i].typeofTrade);
             if(userData.openTrades[i].celebrity == self.req.celebrityName && userData.openTrades[i].typeofTrade == typeofTrade){
                 userData.openTrades.splice(i, 1);
-                console.log(i);
             }
-        }
+        };
+        userData.save();
+        console.log(trade, userData.openTrades);
         userData.openTrades.push({
             time : Date(),
             celebrity : self.celebrity.celebrityName,
             price : self.req.price,
             typeofTrade : typeofTrade,
-            volume : trade - self.req.quantity
+            volume : parseInt(trade) - parseInt(self.req.quantity)
         })
         
         
@@ -244,18 +240,22 @@ checkSellandCover = function(userData, typeofTrade){
     userData.save();
 }
 
-/*spliceTrades = function(user, celebrity , req, self){
-    var spliceArray = [];
-    celebrity.openTrades.filter(function(trades, index){
-            if(self.celebrity.celebrityName == self.req.celebrityName && trades.typeofTrade == typeofTrade){
-                console.log("I meet the condition")
-                spliceArray.push(index);
-            }
-    });
-    
-    for(var i = self.celebrity.openTrades.length; i <= 0; i--){
-            if(self.celebrity.openTrades[i].celebrity == self.req.celebrityName && trades.typeofTrade == typeofTrade){
-                self.celebrity.openTrades.splice(index, 1);
-            }
+removeStops = function(celebrity, userId, typeofTrade){
+    var typeofTrade = (typeofTrade == 'sell') ? 'buy' : 'short';
+    length = celebrity.stopLoss.length -1;
+    for(i = length; i >= 0; i--){
+        if(celebrity.stopLoss.userId == userId && celebrity.typeofTrade == typeofTrade){
+            celebrity.stopLoss.splice(i,1);
+        }
     }
-}*/
+}
+
+removeTakeProfits = function(celebrity, userId, typeofTrade){
+    var typeofTrade = (typeofTrade == 'sell') ? 'buy' : 'short';
+    length = celebrity.takeProit.length -1;
+    for (length; length >= 0; length--){
+        if(celebrity.takeProfit.userId == userId && celebrity.typeofTrade == typeofTrade){
+            celebrity.takeProfit.splice(i,1);
+        }
+    }
+}
