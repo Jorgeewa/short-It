@@ -151,7 +151,7 @@ module.exports.updatePrice = function(req, res){
         manageLifeTrades = new ManageLifeTrades(results, req.body);
         manageLifeTrades.updateUserTradeHistory(req.body.userId, User);
         manageLifeTrades.stopLoss(req.body.userId, User);
-        manageLifeTrades.takeProfit(req.body.userId, User);
+        manageLifeTrades.takeProfit(User);
         manageLifeTrades.shockPrice(Date(), req);
         
     })
