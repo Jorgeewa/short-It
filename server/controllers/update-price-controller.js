@@ -248,6 +248,7 @@ module.exports.setStopsTakeProfits = function(req, res){
             if(req.body.type == 'takeProfits'){
                 results.takeProfit.push({
                     userId : req.body.userId,
+                    tradeId : req.body.tradeId,
                     typeofTrade : req.body.typeofTrade,
                     price: req.body.Price,
                     quantity : req.body.quantity
@@ -255,6 +256,7 @@ module.exports.setStopsTakeProfits = function(req, res){
             } else {
                 results.stopLoss.push({
                     userId : req.body.userId,
+                    tradeId : req.body.tradeId,
                     typeofTrade : req.body.typeofTrade,
                     price: req.body.Price,
                     quantity : req.body.quantity
