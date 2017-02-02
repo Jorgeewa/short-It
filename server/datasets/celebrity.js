@@ -15,6 +15,7 @@ module.exports = mongoose.model('celebrity',{
     
     stopLoss : [{
         userId : String,
+        tradeId : String,
         typeofTrade : String,
         price : Number,
         quantity : Number
@@ -22,6 +23,7 @@ module.exports = mongoose.model('celebrity',{
     
     takeProfit : [{
         userId : String,
+        tradeid ; String,
         typeofTrade : String,
         price : Number,
         quantity : Number
