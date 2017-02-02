@@ -25,6 +25,21 @@ ManageLifeTrades.prototype.stopLoss = function(userDataBase){
     for(length; length >=0; length--){
         if(this.celebrity.stopLoss[length].price >= this.celebrity.bid && this.celebrity.stopLoss.[length].typeofTrade == "buy"
           || this.celebrity.stopLoss[length].price <= this.celebrity.ask && this.celebrity.stopLoss.[length].typeofTrade == "short"){
+            
+           this.celebrity.history.push({
+                time : Date(),
+                lastPrice : (celebrity.stopLoss[i].typeofTrade == "buy") ? this.celebrity.bid : this.celebrity.ask,
+                typeofTrade : celebrity.stopLoss[i].typeofTrade,
+                volume : parseInt(celebrity.stopLoss[i].quantity)
+            });
+
+            this.celebrity.theHouse.push({
+                time : Date(),
+                typeofTrade : celebrity.stopLoss[i].typeofTrade,
+                price : (celebrity.stopLoss[i].typeofTrade == "buy") ? this.celebrity.bid : this.celebrity.ask,
+                volume : parseInt(celebrity.stopLoss[i].quantity)
+            })
+            
             this.updateOpenTrades(this.req.userId, userDataBase, {
                 quantity : celebrity.stopLoss[i].quantity,
                 typeofTrade : celebrity.stopLoss[i].typeofTrade,
@@ -43,6 +58,22 @@ ManageLifeTrades.prototype.takeProfit = function(){
     for(length; length >=0; length--){
         if(this.celebrity.[length].price <= this.celebrity.bid && this.celebrity.takeProfit.[length].typeofTrade == "buy"
           || this.celebrity.takeProfit[length].price >= this.celebrity.ask && this.celebrity.takeProfit.[length].typeofTrade == "short"){
+            
+             this.celebrity.history.push({
+                time : Date(),
+                lastPrice : (celebrity.takeProfit[i].typeofTrade == "buy") ? this.celebrity.bid : this.celebrity.ask,
+                typeofTrade : celebrity.takeProfit[i].typeofTrade,
+                volume : parseInt(celebrity.takeProfit[i].quantity)
+            });
+
+            this.celebrity.theHouse.push({
+                time : Date(),
+                typeofTrade : celebrity.takeProfit[i].typeofTrade,
+                price : (celebrity.takeProfit[i].typeofTrade == "buy") ? this.celebrity.bid : this.celebrity.ask,
+                volume : parseInt(celebrity.takeProfit[i].quantity)
+            })
+            
+            
             this.updateOpenTrades(this.req.userId, userDataBase, {
                 quantity : celebrity.takeProfit[i].quantity,
                 typeofTrade : celebrity.takeProfit[i].typeofTrade,
