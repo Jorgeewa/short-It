@@ -22,6 +22,7 @@ var userSchema = new mongoose.Schema({
     accountValue : Number,
     openTrades : [{
         time : Date,
+        tradeId : String,
         celebrity : String,
         price : Number,
         typeofTrade : String,
