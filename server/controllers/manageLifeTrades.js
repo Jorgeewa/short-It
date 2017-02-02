@@ -147,7 +147,7 @@ ManageLifeTrades.prototype.shockPrice = function(time, req){
     
 }
 
-ManageLifeTrades.prototype.updateUserTradeHistory = function(userId, userDatabase){
+ManageLifeTrades.prototype.updateUserTradeHistory = function(userId, userDatabase, tradeIdIndex){
     self = this;
     userDatabase.findById(userId, function(error, userData){
         if(error){
@@ -179,6 +179,7 @@ ManageLifeTrades.prototype.updateUserTradeHistory = function(userId, userDatabas
                 userData.accountValue = parseFloat(userData.accountValue) - parseFloat(self.req.price * self.req.quantity);
                 userData.openTrades.push({
                     time : Date(),
+                    tradeId : tradeIdIndex,
                     celebrity : self.celebrity.celebrityName,
                     price : self.req.price,
                     typeofTrade : self.req.typeofTrade,
