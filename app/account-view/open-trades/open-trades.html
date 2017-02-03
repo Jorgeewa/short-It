@@ -18,9 +18,9 @@
                 <td>{{openTrade.volume}}</td>
                 <td>{{openTrade.price}}</td>
                 <td ng-click = "close(openTrade.typeofTrade, openTrade.celebrity, openTrade.volume, openTrade.tradeId)"><button class = "w3-btn w3-round-large w3-blue"> Close</button> </td>
-                <td ng-hide= "openTrade.stopLoss" ><button class = "w3-btn w3-round-large w3-blue" ng-click = "parameters = {'type': 'stopLoss', 'price': ask}; hideMe = false;" onclick =" document.getElementById('id01').style.display='block'">Set SL</button> </td>
+                <td ng-hide= "openTrade.stopLoss" ><button class = "w3-btn w3-round-large w3-blue" ng-click = " hideMe = false; storeValues(openTrade, 'stopLoss')" onclick =" document.getElementById('id01').style.display='block'">Set SL</button> </td>
                 <td ng-show= "openTrade.stopLoss">{{openTrade.stopLoss}} </td>
-                <td ng-hide = "openTrade.takeProfit" ><button class = "w3-btn w3-round-large w3-blue" ng-click = "parameters = {'type': 'takeProfits', 'price': ask}; hideMe = false;" onclick =" document.getElementById('id01').style.display='block'">Set TP</button> </td>
+                <td ng-hide = "openTrade.takeProfit" ><button class = "w3-btn w3-round-large w3-blue" ng-click = "hideMe = false; storeValues(openTrade, 'takeProfit');" onclick =" document.getElementById('id01').style.display='block'">Set TP</button> </td>
                 <td ng-show = "openTrade.takeProfit">{{openTrade.takeProfit}}</td>
             </tr>
         
@@ -40,13 +40,13 @@
             <body>
           <div class="w3-container w3-blue">
               <input ng-model = "getPrice" type = "text" class = "w3-input" placeholder = "type in the quantity desired" required>
-              <button ng-click ="hideMe = true; checkError(openTrade.celebrity, openTrade.volume, openTrade.typeofTrade)" >Submit</button>
+              <button ng-click ="checkError(openTrade.celebrity, openTrade.volume, openTrade.typeofTrade)" onclick="document.getElementById('id01').style.display='none'">Submit</button>
           </div>
             </body>
         </div>
     </div>
     <div id = "error" >
-        <div  class="w3-modal-content w3-yellow w3-center" style = "margin: 0 auto; width: 200px; top: -200px">
+        <div  class="w3-modal-content w3-yellow w3-center" style = "margin: 0 auto; width: 200px; top: -370px">
             <span ng-click = "hideMe = false; displayHandler()" class="w3-closebtn w3-hover-text-red">&times;</span>
             <h3>Warning!</h3>
             <p>{{errorMessage}}</p>

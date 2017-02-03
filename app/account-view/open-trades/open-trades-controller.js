@@ -5,7 +5,7 @@
             console.log(userData, userData._id);
             var errorDisplay = angular.element(document.getElementById("error"));
             $http.post('/api/view/open-trades',{userId : userData._id}).then(function(success){
-                $scope.openTrades = success.data.user.openTrades; 
+                $scope.openTrades = success.data.user.openTrades;
             }).catch(function(error){
                 console.log(error);
             })
@@ -23,30 +23,38 @@
             
             $scope.displayHandler = function(){
                 errorDisplay[0].style.display = "none";
-                successDisplay[0].style.display = "none";
+                //successDisplay[0].style.display = "none";
             }
             $scope.displayHandler();
+            var tradeDetails, buttonClicked;
+            $scope.storeValues = function(values, type){
+                tradeDetails = values;
+                buttonClicked = type;
+                console.log(values);
+            }
             
-            $scope.checkError = function(celebrity, volume, typeofTrade){
-                convertToInt = parseInt($scope.getQuantity);
+            $scope.checkError = function(){
+                convertToInt = parseInt($scope.getPrice);
                 if(isNaN($scope.getPrice) || convertToInt<1){
                     $scope.errorMessage = "Price must be positive integer"
                     errorDisplay[0].style.display = "block";
                     return 0;
                 }
                 $http.post('/api/checkError',{
-                    celebrityName : celebrity
+                    celebrityName : tradeDetails.celebrity
                 }).then(function(success){
                     bid = parseFloat(success.data.bid);
                     ask = parseFloat(success.data.ask);
-                    if($scope.getPrice > ask && $scope.parameter.type == 'takeProfits' || $scope.getPrice < bid && $scope.parameter.type == 'stopLoss'){
+                    console.log(bid, ask, $scope.getPrice > ask);
+                    if($scope.getPrice > ask && buttonClicked == 'takeProfit' || $scope.getPrice < bid && buttonClicked == 'stopLoss'){
                         $http.post('/api/setStops&Takeprofits', {
-                            celebrityName : celebrity,
-                            type : $scope.parameter.type,
+                            celebrityName : tradeDetails.celebrity,
+                            type : buttonClicked,
                             price : $scope.getPrice,
                             userId : userData._id,
-                            typofTrade : typeofTrade,
-                            quantity : quantity
+                            typofTrade : tradeDetails.typeofTrade,
+                            quantity : tradeDetails.volume,
+                            tradeId : tradeDetails.tradeId
                             
                         })
                     } else {

@@ -24,26 +24,21 @@ module.exports.computeNewPrice = function(req, res){
                 if(error){
                     console.log(error);
                 } else {
-                    console.log(userData);
-                    console.log(userData.openTrades.length, req.body.typeofTrade == 'cover');
                     accountBalance = userData.accountValue;
                     if(userData.openTrades.length > 0 && req.body.typeofTrade == 'sell'){
                         outstandingVolumeSell = getOutstandingVolume(userData.openTrades, "buy", req) || 0;//null could be a problem here
-                        console.log(outstandingVolumeSell);
                     } else {
                         outstandingVolumeSell = 0;
                     }
                     if(userData.openTrades.length > 0 && req.body.typeofTrade == 'cover'){
                         console.log("I ran here")
                         outstandingVolumeCover = getOutstandingVolume(userData.openTrades, "short", req) || 0;
-                        console.log(outstandingVolumeCover);
                     } else {
                         outstandingVolumeCover = 0;
                     }
                     switch(req.body.typeofTrade){
                         case "buy" :
                             ask = ask * (percentageIncrement + 1);
-                            console.log(quantity, ask, quantity * ask, "I executed here", parseFloat(accountBalance) >= parseFloat(quantity) * parseFloat(ask));
                             if(accountBalance >= quantity * ask && ask > 0)
                                 res.json({price : ask});
                             else {
@@ -55,7 +50,6 @@ module.exports.computeNewPrice = function(req, res){
 
                         case "sell" :
                             bid = bid * (1 - percentageIncrement);
-                            console.log(outstandingVolumeSell)
                             if(outstandingVolumeSell >= quantity && ask > 0)
                                 res.json({price : bid});
                             else{
@@ -104,20 +98,15 @@ module.exports.updatePrice = function(req, res){
     Celebrity.find({celebrityName : req.body.celebrityName}, function(error, results){
         results = results[0];
         if(req.body.typeofTrade == "sell" || req.body.typeofTrade == "short"){
-            console.log(req.body.price);
-            console.log(typeof(req.body.price), ask);
             bid = req.body.price;
             ask = bid - 0 + 2.02;
             var totalOutstanding = parseInt(results.totalOutstanding) + parseInt(req.body.quantity);
             results.totalOutstanding = totalOutstanding;
         } else {
             ask = req.body.price;
-            console.log(ask, bid);
             bid = ask - 2.02;
             var totalOutstanding = parseInt(results.totalOutstanding) - parseInt(req.body.quantity);
-            console.log(totalOutstanding);
             results.totalOutstanding = totalOutstanding;
-            console.log(totalOutstanding, results.totalOutstanding);
         }
         
         results.bid = bid;
@@ -137,8 +126,6 @@ module.exports.updatePrice = function(req, res){
         })
         
         results.save(function(error){
-            console.log("this is the bid ", bid, " and this is the ask ", ask);
-            console.log(req.body.price);
             if(error)
                 console.log(error);
             else {
@@ -168,7 +155,7 @@ module.exports.closeOpenTrade = function(req, res){
     Celebrity.find({celebrityName : req.body.celebrityName}, function(error, results){
         results = results[0];
             outstandingShares = results.totalOutstanding;
-            percentageOfTotal = quantity/outstandingShares;
+            percentageOfTotal = req.body.quantity/outstandingShares;
             randNumber = 0.001 * (percentageOfTotal * (Math.floor((Math.random() * 10) % 10)));
             percentageIncrement = (-0.2 * percentageOfTotal * percentageOfTotal) + (0.2 * percentageOfTotal) + randNumber;
         if(req.body.typeofTrade == "short"){
@@ -192,7 +179,7 @@ module.exports.closeOpenTrade = function(req, res){
             })
             newReq = {
                 quantity : req.body.quantity,
-                typeofTrade : typeofTrade,
+                typeofTrade : req.body.typeofTrade,
                 price : results.ask,
                 celebrityName : req.body.celebrityName,
                 userId : req.body.userId,
@@ -200,7 +187,7 @@ module.exports.closeOpenTrade = function(req, res){
             }
         } else {
             var totalOutstanding = parseInt(results.totalOutstanding) - parseInt(req.body.quantity);
-            results.bid = results.bid * (percentageIncrement - 1);
+            results.bid = results.bid * (1-percentageIncrement);
             results.ask = parseInt(results.bid) + 2.02;
             results.totalOutstanding = totalOutstanding;
             var typeofTrade = 'sell';
@@ -220,7 +207,7 @@ module.exports.closeOpenTrade = function(req, res){
             
             newReq = {
                 quantity : req.body.quantity,
-                typeofTrade : typeofTrade,
+                typeofTrade : req.body.typeofTrade,
                 price : results.bid,
                 celebrityName : req.body.celebrityName,
                 userId : req.body.userId,
@@ -239,7 +226,7 @@ module.exports.closeOpenTrade = function(req, res){
 
 
 module.exports.checkError = function(req, res){
-    celebrity.find({req.body.celebrityName}, function(error, results){
+    Celebrity.find({celebrityName : req.body.celebrityName}, function(error, results){
         if(!error){
             results = results[0];
             res.json({
@@ -254,26 +241,50 @@ module.exports.checkError = function(req, res){
 
 
 module.exports.setStopsTakeProfits = function(req, res){
-    celebrity.find({req.body.celebrityName}, function(error, results){
+    Celebrity.find({celebrityName : req.body.celebrityName}, function(error, results){
         if(!error){
             results = results[0];
-            if(req.body.type == 'takeProfits'){
+            if(req.body.type == 'takeProfit'){
                 results.takeProfit.push({
                     userId : req.body.userId,
                     tradeId : req.body.tradeId,
                     typeofTrade : req.body.typeofTrade,
-                    price: req.body.Price,
+                    price: req.body.price,
                     quantity : req.body.quantity
+                })
+                
+                User.findById(req.body.userId, function(error, userData){
+                    if(!error){
+                        userData.openTrades.filter(function(data){
+                            if(data.tradeId == req.body.tradeId){
+                                data.takeProfit = req.body.price;
+                                userData.save();
+                            }
+                        })
+                    }
                 })
             } else {
                 results.stopLoss.push({
                     userId : req.body.userId,
                     tradeId : req.body.tradeId,
                     typeofTrade : req.body.typeofTrade,
-                    price: req.body.Price,
+                    price: req.body.price,
                     quantity : req.body.quantity
                 })
+                
+                User.findById(req.body.userId, function(error, userData){
+                    if(!error){
+                        userData.openTrades.filter(function(data){
+                            if(data.tradeId == req.body.tradeId){
+                                data.stopLoss = req.body.price;
+                                userData.save();
+                            }
+                        })
+                    }
+                })
             }
+            
+
             
             results.save();
             res.json({success: "it was successful"});
@@ -281,7 +292,6 @@ module.exports.setStopsTakeProfits = function(req, res){
     })
 }
 getOutstandingVolume = function(trade, typeofTrade, req){
-    console.log(req.body, trade)
     return trade.filter(function(trades){
         
     if(trades.celebrity == req.body.celebrityName && trades.typeofTrade == typeofTrade)
