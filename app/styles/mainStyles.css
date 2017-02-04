@@ -8,32 +8,38 @@ body {
 }
 .mainWrap {
 	background-color : #009ec2;
+	height: 110px;
 }
 
-/*.logo-login {
+.logo-login {
 	height: 75px;
-}	*/
+}	
 
 .logo {
   position: relative;
+  height: 75px;
+  width: 285px;
   left: -25px;
   z-index: 1;
   background: #000;
   color: #009ec2;
   -webkit-transform: skew(-20.4deg);
+    text-align : center;
 }
 
 
 .logo img {
 	width : 80%;
 	height : 80%;
+	margin-left: 10%;
+	margin-top : 5%;
 	-webkit-transform: skew(20.4deg);
 	transform: skew(20.4deg);
 }
 
-/*.middle {
+.middle {
 	height: 75px;
-}*/
+}
 
 .hot-topics {
 	line-height : normal;
@@ -47,6 +53,8 @@ body {
 	transform: skewX(-20.4deg);
 	background-color : #00788a;
 	text-align: center;
+	margin-left : 30%; 
+	margin-top : 2%;
 	padding : 5px 8px;
 	display: inline-block;
 	border-radius : 3px;
@@ -83,6 +91,7 @@ span.realigned {
 	background-color : #fff;
 	color: #6cb33f;
 	text-align: center;
+	margin-top : 20%;
 	padding : 5px 8px;
 	border-radius : 3px;
 	font-size: 13px;
@@ -96,6 +105,7 @@ span.realigned {
 }
 
 div.welcome-user {
+	width : 40%;
 	color: #fff;
 	font-size: 13px;
 	line-height : normal;
@@ -118,6 +128,8 @@ div.welcome-user {
 	list-style: none;
 	padding : 0;
 	font-size: 0;
+    position : relative;
+    z-index : 2;
 }
 
 .li-container {
@@ -143,7 +155,8 @@ div.welcome-user {
 	-webkit-transform: skewX(20.4deg);
 	transform: skew(20.4deg);
 	text-decoration: none;
-	/*padding : 9px 45px 5px 45px;*/
+	padding : 9px 45px 5px 45px;
+	height: 35px;
 }
 
 /* Dropdown Content (Hidden by Default) */
@@ -181,4 +194,104 @@ div.welcome-user {
 	background-color : black;
 }
 
+.celebrity-activity {
+    display: inline-block;
+    position : relative;
+    margin-left : 15px;
+}
 
+.celebrity-activity a {
+    text-decoration: none;
+    color: #009ec2;
+}
+.celebrity-activity span {
+    width : 100%;
+    background-color : #00539b;
+    height : 4px;
+    position : absolute;
+    display : none;
+}
+
+.main-render-wrap {
+    background : #fff;
+    height : 700px;
+    position : relative;
+}
+
+.main-render-wrap-design {
+    height : 30px;
+    background : #00bce4;
+}
+
+.activity-news-wrap {
+    padding-left : 20px;
+    padding -right : 20px;
+}
+.activity {
+    height : 30px;
+    background : #009ec2;
+    width : 60%;
+    display : inline-block;
+    
+}
+
+.news {
+    height : 30px;
+    background : #009ec2;
+    width : 35%;
+    display : inline-block;
+    margin-left : 25px;
+}
+
+.activity-div {
+    position: relative;
+    height: 30px;
+    width: 95%;
+    left: 10px;
+    color: #fff;
+    -webkit-transform: skew(-20.4deg);
+    text-align : center;
+    background: #000;
+}
+
+.news-div {
+    position : relative;
+    height: 30px;
+    width: 93%;
+    left: 10px;
+    color: #fff;
+    -webkit-transform: skew(-20.4deg);
+    text-align : center;
+    background: #000;
+}
+
+.activity-div span, .news-div span {
+    transform : skew(20.4deg);
+    -webkit-transform: skew(20.4deg);
+    display : inline-block;
+}
+
+.activity-container {
+    width : 60%;
+    display : inline-block;
+    position : relative;
+}
+
+.tabs-container {
+    top : -90px;
+}
+
+.news-container {
+    height : 100px;
+    width : 35%;
+    display : inline-block;
+    margin-left : 25px;
+}
+
+span.most-active {
+    display : block;
+}
+
+.tabs {
+    margin-left : 30px;
+}

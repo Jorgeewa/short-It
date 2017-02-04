@@ -1,11 +1,149 @@
-<div class = "w3-content w3-section" >
-    <!--- <div class = "w3-twothird w3-white w3-margin-right w3-round-large w3-card" style = "height: 500px"></div>
-    <div class = "w3-rest w3-blue w3-round-large w3-card" style = "height: 500px"></div>-->
-    
-    <div   ng-repeat = "newsItem in newsItems" style = "display : inline-block; vertical-align: bottom; padding : 5px">
-        <div class = "w3-round-large w3-white w3-card" style = " height : 200px;">
-            <div><image class = "w3-round-large w3-white w3-card" src = {{newsItem.image}} style = "width : 224px; height : 126px;"></image></div>
-            <div style = "width : 224px"><a href = {{newsItem.href}}>{{newsItem.artiste}}</a></div>
+<div class = "w3-content w3-section w3-card main-render-wrap">
+    <div class = "main-render-wrap-design"></div>
+    <div class = "w3-section activity-news-wrap">
+        <div class = "activity">
+            <div class = "activity-div"> <span>Celebrity Market Activity</span></div>
         </div>
+        <div class = "news">
+            <div class = "news-div"> <span>Celebrity News</span></div>
+        </div>
+    </div>
+    
+    <div class = "w3-section activity-news-wrap">
+        <div class = "activity-container">
+            <table class = "w3-table w3-striped w3-bordered w3-centered w3-border w3-small">
+                <tr>
+                    <th>Celebrity</th>
+                    <th>Value</th>
+                    <th>Change Net</th>
+                </tr>
+                <tr>
+                    <td>Celebrity</td>
+                    <td>Value</td>
+                    <td>Change Net</td>
+                </tr> 
+                <tr>
+                    <td>Celebrity</td>
+                    <td>Value</td>
+                    <td>Change Net</td>
+                </tr>
+            
+            </table>
+        </div>
+        <div class = "w3-border news-container"></div>
+    </div> <br>
+    <div class = "w3-section activity-news-wrap">
+        <div class = "activity">
+            <div class = "activity-div"> <span>Celebrity Market Activity</span></div>
+        </div>
+        <div class = "news">
+            <div class = "news-div"> <span>Celebrity News</span></div>
+        </div>
+    </div>
+    
+    <div class = "w3-section activity-news-wrap">
+        <div class = "activity-container tabs-container">
+        <ul id="ul-celebrity-activity" ng-init="activeTabOne = 1; activeTabTwo = 0;">
+            <li class = "celebrity-activity"><a href = "" ng-click = "openTab(1)" ng-class="colorA">Most Active <span class = "w3-border most-active " ></span></a></li>
+            <li class = "celebrity-activity" ><a href = "" ng-click = "openTab(2)" ng-class="colorA">Most Advanced <span class = "w3-border most-advanced"></span></a> </li>
+            <li class = "celebrity-activity" ><a href = "" ng-click = "openTab(3)" ng-class="colorA">Most Declined<span class = "w3-border most-declined" ></span></a> </li>
+            <li class = "celebrity-activity" ><a href = "" ng-click = "openTab(4)" ng-class="colorA">Unusual Volume<span class = "w3-border unusual-volume"></span></a> </li>
+        </ul>   
+            
+        <div class = "tabs activeTabOne" ng-show = "activeTabOne" >
+            <table class = "w3-table w3-striped w3-bordered w3-centered w3-border w3-small">
+                <tr>
+                    <th>Celebrity</th>
+                    <th>Last Sale</th>
+                    <th>Change Net</th>
+                    <th>Share volume</th>
+                </tr>
+                <tr>
+                    <td>Passenger</td>
+                    <td>Last Sale</td>
+                    <td>Change Net</td>
+                    <td>Share volume</td>
+                </tr> 
+                <tr>
+                    <td>Passenger</td>
+                    <td>Last Sale</td>
+                    <td>Change Net</td>
+                    <td>Share volume</td>
+                </tr>
+            
+            </table>
+        </div>
+        <div class = "tabs activeTabTwo" ng-show = "activeTabTwo" >
+            <table class = "w3-table w3-striped w3-bordered w3-centered w3-border w3-small">
+                <tr>
+                    <th>Celebrity</th>
+                    <th>Last Sale</th>
+                    <th>Change Net</th>
+                    <th>Share volume</th>
+                </tr>
+                <tr>
+                    <td>tuFace</td>
+                    <td>Last Sale</td>
+                    <td>Change Net</td>
+                    <td>Share volume</td>
+                </tr> 
+                <tr>
+                    <td>Olamide</td>
+                    <td>Last Sale</td>
+                    <td>Change Net</td>
+                    <td>Share volume</td>
+                </tr>
+            
+            </table>
+        </div>
+        <div class = "tabs activeTabThree" ng-show = "activeTabThree" >
+            <table class = "w3-table w3-striped w3-bordered w3-centered w3-border w3-small">
+                <tr>
+                    <th>Celebrity</th>
+                    <th>Last Sale</th>
+                    <th>Change Net</th>
+                    <th>Share volume</th>
+                </tr>
+                <tr>
+                    <td>Don Jazzy</td>
+                    <td>Last Sale</td>
+                    <td>Change Net</td>
+                    <td>Share volume</td>
+                </tr> 
+                <tr>
+                    <td>Olamide</td>
+                    <td>Last Sale</td>
+                    <td>Change Net</td>
+                    <td>Share volume</td>
+                </tr>
+            
+            </table>
+        </div>
+            
+        <div class = "tabs activeTabFour" ng-show = "activeTabFour" >
+            <table class = "w3-table w3-striped w3-bordered w3-centered w3-border w3-small">
+                <tr>
+                    <th>Celebrity</th>
+                    <th>Last Sale</th>
+                    <th>Change Net</th>
+                    <th>Share volume</th>
+                </tr>
+                <tr>
+                    <td>Olamide</td>
+                    <td>Last Sale</td>
+                    <td>Change Net</td>
+                    <td>Share volume</td>
+                </tr> 
+                <tr>
+                    <td>tuFace</td>
+                    <td>Last Sale</td>
+                    <td>Change Net</td>
+                    <td>Share volume</td>
+                </tr>
+            
+            </table>
+        </div>
+        </div>
+        <div class = "w3-border news-container"></div>
     </div>
 </div>

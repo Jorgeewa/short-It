@@ -9,19 +9,19 @@
         <link rel = "stylesheet" type = "text/css" href ="app/styles/ticker.css">
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 	<body>
-		<div class = "mainWrap w3-container w3-padding-0">
-			<div class = "logo-login w3-row">
-				<div class = "logo  w3-third w3-container w3-col"><img src = "app/pictures/shortIt.png"></div>
-				<div class = "middle w3-third w3-container w3-col">
-					<div class = "hot-topics w3-content">
+		<div class = "mainWrap w3-container  w3-padding-0">
+			<div class = "logo-login">
+				<div class = "logo  w3-quarter w3-container"><img src = "app/pictures/shortIt.png"></div>
+				<div class = "middle w3-half w3-container">
+					<div class = "hot-topics">
 						<div class = "realign">
 							<span class = "realigned">Hot Topics:</span>
 						</div>
 						<a href = "#">Celebrities</a><span>|</span>
-						<a href = "#">Celebrity News</a>
+						<a href = "#">Celebrity News</a><p>Don't just talk about Celebrities trade them!!!</p>
 					</div>
 				</div>
-				<div class = "short-it-login w3-third w3-col w3-container">
+				<div class = "short-it-login w3-quarter w3-container">
 					<div class = "welcome-user" ng-hide = "loggedOut">Welcome {{userName}}</div>
 					<div><a href = "" class = "authentication-area" ng-click = "logOut()" ng-hide = "loggedOut"><span class = "realigned">Logout</span></a></div>
 					<div ><a href = "#" class = "authentication-area" ui-sref = "signUp" ng-hide = "loggedIn"><span class = "realigned">Sign up</span></a><span ng-hide = "loggedIn"> Or </span></div>
@@ -30,14 +30,14 @@
 					
 				</div>
 			</div>
-			<ul class = "ul-container w3-content">
+			<ul class = "ul-container">
 				<li class = "li-container">
 					<a  class = "dropdown" href="https://powerful-shelf-45643.herokuapp.com/#/">Home</a>
 				</li>
 				<li class = "li-container">
-					<a  class = "dropdown" href="#">My portofolio <i class="fa fa-caret-down"></i></a>
+					<a  class = "dropdown" href="#">My portfolio <i class="fa fa-caret-down"></i></a>
 					<div class = "dropdown-content">
-						<a href="#" ng-click = "checkIfLoggedIn('viewPortofolio')" >View portofolio</a>
+						<a href="#" ng-click = "checkIfLoggedIn('viewPortofolio')" >View portfolio</a>
 						<a href="#" ng-click = "checkIfLoggedIn('tradeHistory')">Trade History</a>
                         <a href="#" ng-click = "checkIfLoggedIn('accountBalance')">Account Balance</a>
 					</div>
@@ -48,7 +48,7 @@
 						<a href="#" ui-sref = "renderCelebrites">Trade Celebrities</a>
                         <a href="#">Trade Movies</a>
                         <a href="#">Trade Your favorite Club</a>
-						<a href="# " ui-sref = "celebNews">Celebrity News and Rumors</a>
+						<a href="#" ui-sref = "celebNews">Celebrity News and Rumors</a>
 						<a href="#">Tips</a>
 					</div>
 				</li>
@@ -110,14 +110,15 @@
     <script src = "app/account-view/account-balance/account-balance-controller.js"></script>
     <script src = "app/news/celebrity-news-controller.js"></script>
     
+    
 	</body>
     <footer class = "w3-container w3-padding-0" style = "height: 150px; background-color:#424242;">
         <div class = "w3-container w3-black" style = "height: 40px; width: 100%">
             <div class = "w3-quarter" style = "height: 40px; width: 10%"><img src = "app/pictures/shortIt.png" style = "width : 70%; height: 100%"></div>
             <div style = "float: right; margin-top: 0.5%">
-                <span><a href = ""><i class="fa fa-facebook"></i></a></span>
-                <span><a href = ""><i class="fa fa-twitter"></i></a></span>
-                <span><a href = ""><i class="fa fa-google-plus"></i></a></span>
+                <span><a href = "https://www.facebook.com/georgeewauche"><i class="fa fa-facebook"></i></a></span>
+                <span><a href = "https://twitter.com/jorge1ndonly"><i class="fa fa-twitter"></i></a></span>
+                <span><a href = "https://plus.google.com/u/0/104306487058693794113"><i class="fa fa-google-plus"></i></a></span>
             </div>
         </div>
         <div style = "color: white; margin-left: 35%" class = "w3-container">

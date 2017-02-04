@@ -1,33 +1,39 @@
-<div class = "w3-content w3-section">
-    <div class = "w3-twothird w3-white w3-margin-right w3-round-large w3-card w3-small" style = "height: 500px">
-        <table class = "w3-table w3-striped w3-bordered w3-centered">
-            <tr>
-                <th>Date</th>
-                <th>Action</th>
-                <th>Celebrity</th>
-                <th>Quantity</th>
-                <th>Amount</th>
-                <th>Close</th>
-                <th>Set Stops</th>
-                <th>Set Take Profit</th>
-            </tr>
-            <tr ng-repeat = "openTrade in openTrades">
-                <td>{{openTrade.time.UTCString()}}</td>
-                <td>{{openTrade.typeofTrade}}</td>
-                <td>{{openTrade.celebrity}}</td>
-                <td>{{openTrade.volume}}</td>
-                <td>{{openTrade.price}}</td>
-                <td ng-click = "close(openTrade.typeofTrade, openTrade.celebrity, openTrade.volume, openTrade.tradeId)"><button class = "w3-btn w3-round-large w3-blue"> Close</button> </td>
-                <td ng-hide= "openTrade.stopLoss" ><button class = "w3-btn w3-round-large w3-blue" ng-click = " hideMe = false; storeValues(openTrade, 'stopLoss')" onclick =" document.getElementById('id01').style.display='block'">Set SL</button> </td>
-                <td ng-show= "openTrade.stopLoss">{{openTrade.stopLoss}} </td>
-                <td ng-hide = "openTrade.takeProfit" ><button class = "w3-btn w3-round-large w3-blue" ng-click = "hideMe = false; storeValues(openTrade, 'takeProfit');" onclick =" document.getElementById('id01').style.display='block'">Set TP</button> </td>
-                <td ng-show = "openTrade.takeProfit">{{openTrade.takeProfit}}</td>
-            </tr>
-        
-        </table>
-    
+<div class = "w3-content w3-section w3-card" style = "background : #fff; height : 700px; position: relative;">
+    <div style = "height : 30px; background: #00bce4;"></div>
+    <div class = "w3-section" style = "padding-left: 20px; padding-right : 20px">
+        <div class = "" style = "height: 30px; background : #009ec2; width: 60%; display: inline-block"><div class = "logo" style = "height: 30px; left: 2.5%; width: 95%; color: #fff"> Open Trades</div></div>
+        <div class = "" style = "height: 30px; background : #009ec2; width: 35%; display: inline-block; margin-left: 25px"><div class = "logo" style = "height: 30px; left: 2.9%; width: 93%; color: #fff; "> Celebrity News</div></div>
     </div>
-    <div class = "w3-rest w3-blue w3-round-large w3-card" style = "height: 500px">
+       <div class = "w3-section" style = "padding-left: 20px; padding-right : 20px">
+           <div class = "" style = "height: 100px; width: 60%; display: inline-block; overflow: scroll; height: 600px;">
+            <table class = "w3-table w3-striped w3-bordered w3-centered w3-border w3-small">
+                <tr>
+                    <th>Date</th>
+                    <th>Action</th>
+                    <th>Celebrity</th>
+                    <th>Quantity</th>
+                    <th>Amount</th>
+                    <th>Close</th>
+                    <th>Set Stops</th>
+                    <th>Set Take Profit</th>
+                </tr>
+                <tr ng-repeat = "openTrade in openTrades">
+                    <td>{{openTrade.time.UTCString()}}</td>
+                    <td>{{openTrade.typeofTrade}}</td>
+                    <td>{{openTrade.celebrity}}</td>
+                    <td>{{openTrade.volume}}</td>
+                    <td>{{openTrade.price}}</td>
+                    <td ng-click = "close(openTrade.typeofTrade, openTrade.celebrity, openTrade.volume, openTrade.tradeId)"><button class = "w3-btn w3-round-large w3-blue"> Close</button> </td>
+                    <td ng-hide= "openTrade.stopLoss" ><button class = "w3-btn w3-round-large w3-blue" ng-click = " hideMe = false; storeValues(openTrade, 'stopLoss')" onclick =" document.getElementById('id01').style.display='block'">Set SL</button> </td>
+                    <td ng-show= "openTrade.stopLoss">{{openTrade.stopLoss}} </td>
+                    <td ng-hide = "openTrade.takeProfit" ><button class = "w3-btn w3-round-large w3-blue" ng-click = "hideMe = false; storeValues(openTrade, 'takeProfit');" onclick =" document.getElementById('id01').style.display='block'">Set TP</button> </td>
+                    <td ng-show = "openTrade.takeProfit">{{openTrade.takeProfit}}</td>
+                </tr>
+
+            </table>
+        </div>
+        <div class = "w3-border" style = "height: 100px; width: 35%; display: inline-block; margin-left: 25px; position: relative; top: -500px;"></div>
+    </div>
     </div>
     
     <div id="id01" class="w3-modal" ng-hide = "hideMe">

@@ -1,62 +1,69 @@
-<div class = "w3-content w3-section">
-    <div class = "w3-twothird w3-white w3-margin-right w3-round-large w3-card " style = "height: 500px">This is {{celebrityName}}
+<div class = "w3-content w3-section w3-card" style = "background : #fff; height : 700px; position: relative;">
+    <div style = "height : 30px; background: #00bce4;"></div>
+    <div class = "w3-section" style = "padding-left: 20px; padding-right : 20px">
+        <div class = "" style = "height: 30px; background : #009ec2; width: 60%; display: inline-block"><div class = "logo" style = "height: 30px; left: 2.5%; width: 95%; color: #fff"> {{celebrityName}}</div></div>
+        <div class = "" style = "height: 30px; background : #009ec2; width: 35%; display: inline-block; margin-left: 25px"><div class = "logo" style = "height: 30px; left: 2.9%; width: 93%; color: #fff; "> Trade Celebrity</div></div>
     </div>
-    <div class = "w3-content w3-rest" style = "height: 500px"> 
-        <div class="w3-card-16 w3-round-xlarge" style="width:250px;" ng-init ="unHideMeSuccess = true; unHideMeError = true">
-            <img src="http://www.w3schools.com/w3css/img_avatar5.png" alt="Person" style="width:100%">
-            <div class = "w3-container w3-card-4 w3-display-containter w3-black w3-border" style = "height: 200px; position: relative;">
-                <div class ="w3-display-topleft">
-                    <button class = "w3-card-8 w3-center w3-border w3-padding-4 w3-margin w3-round-large bidColorChange" style = "width: 100px; font-size: 12px;  background-color: red"><b class = "bid"><br>Bid</b></button>
-                </div>
-                <div class ="w3-display-topright">
-                    <button class = "w3-card-8 w3-center w3-border w3-padding-4 w3-margin w3-round-large askColorChange" style = "width: 100px; font-size: 12px; background-color: blue"><b class = "ask"><br>Ask</b></button>
-                </div>
-
-                <div class = "w3-display-left">
-                    <button class = "w3-btn w3-center w3-red w3-border w3-padding-8 w3-margin w3-round-large" style = "width: 100px; font-size: 12px" ng-click = "parameters = {'type': 'sell', 'price': bid}; hideMe = false; checkIfLoggedIn()" onclick =" document.getElementById('id01').style.display='block'"><b>Sell</b></button>
-                </div>
-                <div class = "w3-display-right" style = "position: absolute">
-                    <button class = "w3-btn w3-center w3-blue w3-border w3-padding-8 w3-margin w3-round-large" style = "width: 100px; font-size: 12px" ng-click = "parameters = {'type': 'buy', 'price': ask}; hideMe = false; checkIfLoggedIn()" onclick =" document.getElementById('id01').style.display='block'"><b>Buy</b></button>
-                </div>
-
-                <div class = "w3-display-bottomleft">
-                    <button class = "w3-btn w3-center w3-red w3-border w3-padding-8 w3-margin w3-round-large" style = "width: 100px; font-size: 12px" ng-click = "parameters = {'type': 'short', 'price': bid}; hideMe = false; checkIfLoggedIn()" onclick =" document.getElementById('id01').style.display='block'"><b>Short</b></button>
-                </div>
-                <div class = "w3-display-bottomright">
-                    <button class = "w3-btn w3-center w3-blue w3-border w3-padding-8 w3-margin w3-round-large" style = "width: 100px; font-size: 12px" ng-click = "parameters = {'type': 'cover', 'price': ask}; hideMe = false; checkIfLoggedIn()" onclick =" document.getElementById('id01').style.display='block'"><b>Cover</b></button>
-                </div>
-                <div id="id01" class="w3-modal" ng-hide = "hideMe">
-                    <div class="w3-modal-content w3-center" style= "width: 400px">
-                      <header class="w3-container w3-teal"> 
-                        <span onclick="document.getElementById('id01').style.display='none'" 
-                        class="w3-closebtn">&times;</span>
-                        <h2>you are about to{{" " + parameters.type}} and the price is {{parameters.price}}</h2>
-                      </header>
-                        <body>
-                      <div class="w3-container w3-blue">
-                          <input ng-model = "getQuantity" type = "text" class = "w3-input" placeholder = "type in the quantity desired" required>
-                          <button ng-click ="hideMe = true; computeNewPrice()" >Submit</button>
-                      </div>
-                        </body>
+    <div class = "w3-section" style = "padding-left: 20px; padding-right : 20px">
+        <div class = "w3-border" style = "height: 100px; width: 60%; display: inline-block; position : relative; top: -190px;">
+        </div>
+        <div class = "" style = "height: 100px; width: 35%; display: inline-block; margin-left: 25px">
+            <div class="w3-card-16 w3-round-xlarge w3-content" style="width:300px;" ng-init ="unHideMeSuccess = true; unHideMeError = true">
+                <img src="http://www.w3schools.com/w3css/img_avatar5.png" alt="Person" style="width:100%">
+                <div class = "w3-container w3-card-4 w3-display-containter w3-black w3-border" style = "height: 200px; position: relative;">
+                    <div class ="w3-display-topleft">
+                        <button class = "w3-card-8 w3-center w3-border w3-padding-4 w3-margin w3-round-large bidColorChange" style = "width: 100px; font-size: 12px;  background-color: red"><b class = "bid"><br>Bid</b></button>
                     </div>
-                </div>
-                <div id = "success">    
-                    <div class="w3-modal-content w3-yellow w3-center" style = "margin: 0 auto; width: 200px; top: -200px">
-                        <span ng-click = "hideMe = false; displayHandler()" class="w3-closebtn w3-hover-text-red">&times;</span>
-                        <h3>Warning!</h3>
-                        <p ng-init = "indicativePrice = 0">You are about to {{parameters.type + " " + getQuantity + " units of " + celebrityName + " for " +  indicativePrice}}</p>
-                        <button ng-click ="hideMe = true; displayHandler(); updatePrices()" class = "w3-btn" >Submit</button>
-                        <button ng-click ="hideMe = false; displayHandler()" class = "w3-btn" >Cancel</button>
+                    <div class ="w3-display-topright">
+                        <button class = "w3-card-8 w3-center w3-border w3-padding-4 w3-margin w3-round-large askColorChange" style = "width: 100px; font-size: 12px; background-color: blue"><b class = "ask"><br>Ask</b></button>
                     </div>
-                </div>
-                <div id = "error" >
-                    <div  class="w3-modal-content w3-yellow w3-center" style = "margin: 0 auto; width: 200px; top: -200px">
-                        <span ng-click = "hideMe = false; displayHandler()" class="w3-closebtn w3-hover-text-red">&times;</span>
-                        <h3>Warning!</h3>
-                        <p>{{errorMessage}}</p>
-                    </div>
-                </div>
 
+                    <div class = "w3-display-left">
+                        <button class = "w3-btn w3-center w3-red w3-border w3-padding-8 w3-margin w3-round-large" style = "width: 100px; font-size: 12px" ng-click = "parameters = {'type': 'sell', 'price': bid}; hideMe = false; checkIfLoggedIn()" onclick =" document.getElementById('id01').style.display='block'"><b>Sell</b></button>
+                    </div>
+                    <div class = "w3-display-right" style = "position: absolute">
+                        <button class = "w3-btn w3-center w3-blue w3-border w3-padding-8 w3-margin w3-round-large" style = "width: 100px; font-size: 12px" ng-click = "parameters = {'type': 'buy', 'price': ask}; hideMe = false; checkIfLoggedIn()" onclick =" document.getElementById('id01').style.display='block'"><b>Buy</b></button>
+                    </div>
+
+                    <div class = "w3-display-bottomleft">
+                        <button class = "w3-btn w3-center w3-red w3-border w3-padding-8 w3-margin w3-round-large" style = "width: 100px; font-size: 12px" ng-click = "parameters = {'type': 'short', 'price': bid}; hideMe = false; checkIfLoggedIn()" onclick =" document.getElementById('id01').style.display='block'"><b>Short</b></button>
+                    </div>
+                    <div class = "w3-display-bottomright">
+                        <button class = "w3-btn w3-center w3-blue w3-border w3-padding-8 w3-margin w3-round-large" style = "width: 100px; font-size: 12px" ng-click = "parameters = {'type': 'cover', 'price': ask}; hideMe = false; checkIfLoggedIn()" onclick =" document.getElementById('id01').style.display='block'"><b>Cover</b></button>
+                    </div>
+                    <div id="id01" class="w3-modal" ng-hide = "hideMe">
+                        <div class="w3-modal-content w3-center" style= "width: 400px">
+                          <header class="w3-container w3-teal"> 
+                            <span onclick="document.getElementById('id01').style.display='none'" 
+                            class="w3-closebtn">&times;</span>
+                            <h2>you are about to{{" " + parameters.type}} and the price is {{parameters.price}}</h2>
+                          </header>
+                            <body>
+                          <div class="w3-container w3-blue">
+                              <input ng-model = "getQuantity" type = "text" class = "w3-input" placeholder = "type in the quantity desired" required>
+                              <button ng-click ="hideMe = true; computeNewPrice()" >Submit</button>
+                          </div>
+                            </body>
+                        </div>
+                    </div>
+                    <div id = "success">    
+                        <div class="w3-modal-content w3-yellow w3-center" style = "margin: 0 auto; width: 200px; top: -200px">
+                            <span ng-click = "hideMe = false; displayHandler()" class="w3-closebtn w3-hover-text-red">&times;</span>
+                            <h3>Warning!</h3>
+                            <p ng-init = "indicativePrice = 0">You are about to {{parameters.type + " " + getQuantity + " units of " + celebrityName + " for " +  indicativePrice}}</p>
+                            <button ng-click ="hideMe = true; displayHandler(); updatePrices()" class = "w3-btn" >Submit</button>
+                            <button ng-click ="hideMe = false; displayHandler()" class = "w3-btn" >Cancel</button>
+                        </div>
+                    </div>
+                    <div id = "error" >
+                        <div  class="w3-modal-content w3-yellow w3-center" style = "margin: 0 auto; width: 200px; top: -200px">
+                            <span ng-click = "hideMe = false; displayHandler()" class="w3-closebtn w3-hover-text-red">&times;</span>
+                            <h3>Warning!</h3>
+                            <p>{{errorMessage}}</p>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>
