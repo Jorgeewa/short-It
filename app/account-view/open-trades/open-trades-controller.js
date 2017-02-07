@@ -61,6 +61,10 @@
                             quantity : tradeDetails.volume,
                             tradeId : tradeDetails.tradeId
                             
+                        }).then(function(success){
+                            console.log(success)
+                        }).catch(function(error){
+                            console.log(error)
                         })
                     } else {
                         $scope.errorMessage = "You cannot place stops or take profits in between the spread";
