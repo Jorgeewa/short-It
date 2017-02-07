@@ -12,13 +12,18 @@ module.exports.openTrades = function(req, res){
             else {
                 var openTrades = [];
                 userData.openTrades.forEach(function (trade){
+                    if(trade.typeofTrade == "short"){
+                        profits = trade.volume * trade.price - trade.volume * lastPrices[trade.celebrity];
+                    } else {
+                        profits = trade.volume * lastPrices[trade.celebrity] - trade.volume * trade.price;
+                    }
                     openTrades.push({
                         time : trade.time,
                         typeofTrade : trade.typeofTrade,
                         celebrity : trade.celebrity,
                         volume : trade.volume,
                         price : trade.price,
-                        profit : trade.volume * trade.price - trade.volume * lastPrices[trade.celebrity]
+                        profit : profits
                     })
                 })
 
