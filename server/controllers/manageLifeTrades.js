@@ -334,8 +334,7 @@ checkSellandCover = function(userData, typeofTrade, self, tradeId){
         }).reduce(function(mappedA, mappedB){
             return {
                         volume : parseInt(mappedA.volume) + parseInt(mappedB.volume),
-                        price : parseFloat(mappedA.price) + parseFloat(mappedB.price),
-                        counter : counter++
+                        price : (parseFloat(mappedA.volume * mappedA.price) + parseFloat(mappedB.volume * mappedB.price))/(parseInt(mappedA.volume) + parseInt(mappedB.volume)),
                    };
         });
         
@@ -361,7 +360,7 @@ checkSellandCover = function(userData, typeofTrade, self, tradeId){
                 time : Date(),
                 tradeId : self.req.tradeId,
                 celebrity : self.celebrity.celebrityName,
-                price : parseFloat(trade.volume)/trade.counter,
+                price : (trade.price * trade.volume - self.req.quantity * self.req.price)/(trade.volume - self.req.quantity),
                 typeofTrade : typeofTrade,
                 volume : parseInt(trade.volume) - parseInt(self.req.quantity)
             })
