@@ -50,8 +50,8 @@
                     console.log(bid, ask, $scope.getPrice > ask);
                     if((tradeDetails.typeofTrade == "buy" && $scope.getPrice > ask && buttonClicked == "takeProfit"
                        || tradeDetails.typeofTrade == "buy" && $scope.getprice < bid && buttonClicked == "stopLoss")||
-                      tradeDetails.typeofTrade == "short" && tradeDetails.price * 2 <= $scope.getPrice && buttonClicked == "stopLoss" ||
-                      tradeDetails.typeofTrade == "short" && $scope.getPrice < bid && buttonClicked == "takeProfit"){
+                      (tradeDetails.typeofTrade == "short" && tradeDetails.price * 2 <= $scope.getPrice && buttonClicked == "takeProfit" ||
+                      tradeDetails.typeofTrade == "short" && $scope.getPrice < bid && buttonClicked == "stopLoss")){
                         $http.post('/api/setStops&Takeprofits', {
                             celebrityName : tradeDetails.celebrity,
                             type : buttonClicked,
