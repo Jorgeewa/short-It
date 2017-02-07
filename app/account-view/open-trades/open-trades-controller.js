@@ -11,7 +11,7 @@
                 console.log(error);
             })
             
-            $scope.close = function(typeofTrade, celebrity, volume, tradeId){
+            $scope.close = function(typeofTrade, celebrity, volume, tradeId, price){
                 console.log(celebrity, volume, typeofTrade, userData._id, price)
                 $http.post('/api/close', {
                     celebrityName : celebrity,
