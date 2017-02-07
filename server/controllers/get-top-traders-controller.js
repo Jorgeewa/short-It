@@ -28,8 +28,13 @@ module.exports.topTraders = function (req, res){
                         allUsers.forEach(function(user){
                             var valueofOpenTrades = 0;
                             user.openTrades.forEach(function(openTrades){
-                                valueofOpenTrades = valueofOpenTrades + (openTrades.volume * openTrades.price) - (openTrades.volume * lastPrices[openTrades.celebrity]);
-                                console.log(valueofOpenTrades, openTrades.volume, openTrades.price, lastPrices[openTrades.celebrity]);
+                                if(openTrades.typeofTrade == "short"){
+                                    value = openTrades.volume * openTrades.price - openTrades.volume * lastPrices[openTrades.celebrity]
+                                } else {
+                                    value = openTrades.volume * lastPrices[openTrades.celebrity] - openTrades.volume * openTrades.price;
+                                }
+                                valueofOpenTrades = valueofOpenTrades + value;
+                                
                             });
 
                             currentValue = user.accountValue + valueofOpenTrades;
