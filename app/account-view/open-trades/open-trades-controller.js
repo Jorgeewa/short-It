@@ -2,22 +2,24 @@
     angular.module('shortIt')
         .controller('OpenTradesController',['$scope', '$http', function($scope, $http){
             userData = JSON.parse(localStorage.getItem('User-Data'));
-            console.log(userData, userData._id);
             var errorDisplay = angular.element(document.getElementById("error"));
+            console.log('I ran here')
             $http.post('/api/view/open-trades',{userId : userData._id}).then(function(success){
-                $scope.openTrades = success.data.user.openTrades;
+                console.log(success);
+                $scope.openTrades = success.data.openTrades;
             }).catch(function(error){
                 console.log(error);
             })
             
             $scope.close = function(typeofTrade, celebrity, volume, tradeId){
-                console.log(celebrity, volume, typeofTrade, userData._id)
+                console.log(celebrity, volume, typeofTrade, userData._id, price)
                 $http.post('/api/close', {
                     celebrityName : celebrity,
                     quantity : volume,
                     typeofTrade : typeofTrade,
                     userId : userData._id,
-                    tradeId : tradeId
+                    tradeId : tradeId,
+                    price : price
                 })
             }
             
@@ -46,7 +48,10 @@
                     bid = parseFloat(success.data.bid);
                     ask = parseFloat(success.data.ask);
                     console.log(bid, ask, $scope.getPrice > ask);
-                    if($scope.getPrice > ask && buttonClicked == 'takeProfit' || $scope.getPrice < bid && buttonClicked == 'stopLoss'){
+                    if((tradeDetails.typeofTrade == "buy" && $scope.getPrice > ask && buttonClicked == "takeProfit"
+                       || tradeDetails.typeofTrade == "buy" && $scope.getprice < bid && buttonClicked == "stopLoss")||
+                      tradeDetails.typeofTrade == "short" && tradeDetails.price * 2 <= $scope.getPrice && buttonClicked == "stopLoss" ||
+                      tradeDetails.typeofTrade == "short" && $scope.getPrice < bid && buttonClicked == "takeProfit"){
                         $http.post('/api/setStops&Takeprofits', {
                             celebrityName : tradeDetails.celebrity,
                             type : buttonClicked,

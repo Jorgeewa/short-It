@@ -22,6 +22,7 @@ var userController = require('./server/controllers/user-controller');
 var renderCelebritiesController = require('./server/controllers/render-celebrities-controller');
 var showAccountDetailsController = require('./server/controllers/show-account-details-controller');
 var renderCelebrityNews = require('./server/controllers/render-celebrity-news-controller');
+var getTopTraders = require('./server/controllers/get-top-traders-controller');
 
 mongoose.connect('mongodb://localhost:27017/shortIt');
 //mongoose.connect('mongodb://heroku_6j09bfdg:58r3cd70mq1om5cd9hju6fk87r@ds041586.mlab.com:41586/heroku_6j09bfdg');
@@ -59,6 +60,9 @@ app.get('/api/render/celebrites', renderCelebritiesController.render);
 app.post('/api/view/open-trades', showAccountDetailsController.openTrades);
 app.post('/api/view/trade-history', showAccountDetailsController.tradeHistory);
 app.post('/api/view/account-balance', showAccountDetailsController.accountBalance);
+
+//get the Top Traders
+app.get('/api/view/top-trader', getTopTraders.topTraders);
 
 //render news on main page
 app.get('/main', renderCelebrityNews.render);

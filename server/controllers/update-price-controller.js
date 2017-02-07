@@ -1,4 +1,3 @@
-var Celebrity = require('../datasets/celebrity');
 var mongoose = require('mongoose');
 var User = require('../datasets/users')
 var User = mongoose.model('User');
@@ -123,8 +122,7 @@ module.exports.updatePrice = function(req, res){
             typeofTrade : req.body.typeofTrade,
             price : req.body.price,
             volume : parseInt(req.body.quantity)
-        })
-        
+        });     
         results.save(function(error){
             if(error)
                 console.log(error);
@@ -135,12 +133,26 @@ module.exports.updatePrice = function(req, res){
                 })
             }
         });
+        
         tradeIdIndex = results.history[results.history.length - 1]._id;
+        if(typeofTrade == 'short'){
+            results.shortInterest.push({
+                time : Date(),
+                price : req.body.price,
+                tradeId : tradeIdIndex,
+                typeofTrade : req.body.typeofTrade,
+                quantity : req.body.quantity,
+                userId : req.body.userId
+            })
+            results.save();
+        }
+        
         manageLifeTrades = new ManageLifeTrades(results, req.body);
         manageLifeTrades.updateUserTradeHistory(req.body.userId, User, tradeIdIndex);
         manageLifeTrades.stopLoss(User);
         manageLifeTrades.takeProfit(User);
         manageLifeTrades.shockPrice(Date(), req);
+        manageLifetrades.shortInterest(User);
         
     })
     
@@ -217,6 +229,7 @@ module.exports.closeOpenTrade = function(req, res){
         results.save();
         manageLifeTrades = new ManageLifeTrades(results, newReq);
         manageLifeTrades.updateOpenTrades(req.body.userId, User, newReq);
+        manageLifeTrades.shortInterest(User);
         manageLifeTrades.stopLoss(User);
         manageLifeTrades.takeProfit(User);
         res.json({complete : 'complete'})

@@ -71,6 +71,13 @@
             templateUrl : "app/news/celebrity-news.html",
             controller : "CelebrityNewsController"
         })
+        
+        $stateProvider
+            .state('topTrader', {
+            url : "/top-trader",
+            templateUrl : "app/topTrader/top-trader.html",
+            controller : "TopTraderController"
+        })
     })
     
     //.service('$ticker', $ticker)

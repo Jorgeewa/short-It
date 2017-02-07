@@ -57,22 +57,22 @@
 					<div class = "dropdown-content">
 					  <a href="#">Forums</a>
 					  <a href="#">LeaderBoards</a>
-					  <a href="#">Top Traders</a>
+					  <a href="#" ui-sref = "topTrader">Top Traders</a>
 					</div>
 				</li>
 				<li class = "li-container">
 					<a  class = "dropdown" href="#">About Celebrities Trading <i class="fa fa-caret-down"></i></a>
 					<div class = "dropdown-content">
-					  <a href="#">Top Traders</a>
 					  <a href="#">Glossary</a>
 					  <a href="#">FAQ</a>
 					</div>
 				</li>
 				<li class = "li-container">
 					<a  class = "dropdown" href="#">About Us <i class="fa fa-caret-down"></i></a>
-					<div class = "dropdown-content">
+					<div class = "dropdown-content last-child">
 						<a href="#">Contact Us</a>
 						<a href="#">About Short It</a>
+                        <a href="https://jorgeewa.github.io/who-wants-to-be-a-millionaire-game/Millionaire/Index.html">Other Games by Us</a>
 					</div>
 				</li>
 			</ul>
@@ -86,7 +86,7 @@
     <div id = "tickerDiv" class =  "w3-container w3-black w3-border w3-border-white" style = "width : 100%; position : fixed; bottom : 0px">
         <div id = "tickerDiv-child"> 
             <ul id = "tickerUl">
-                <li ng-repeat = "celebrity in celebrities"><a >{{celebrity.celebrityName + " (" + celebrity.symbol + ") " + celebrity.history[celebrity.history.length-1].lastPrice }}</a></li>
+                <li ng-repeat = "celebrity in celebrities"><a >{{celebrity.celebrityName + " (" + celebrity.symbol + ") " + celebrity.history[celebrity.history.length-1].lastPrice.toFixed(2) }}</a></li>
                 <div ng-bind-html="exec()"></div>
             </ul>
         </div>
@@ -109,6 +109,7 @@
     <script src = "app/account-view/trade-history/trade-history-controller.js"></script>
     <script src = "app/account-view/account-balance/account-balance-controller.js"></script>
     <script src = "app/news/celebrity-news-controller.js"></script>
+    <script src = "app/topTrader/top-trader-controller.js"></script>
     
     
 	</body>

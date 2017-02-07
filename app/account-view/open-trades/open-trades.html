@@ -1,18 +1,23 @@
-<div class = "w3-content w3-section w3-card" style = "background : #fff; height : 700px; position: relative;">
-    <div style = "height : 30px; background: #00bce4;"></div>
-    <div class = "w3-section" style = "padding-left: 20px; padding-right : 20px">
-        <div class = "" style = "height: 30px; background : #009ec2; width: 60%; display: inline-block"><div class = "logo" style = "height: 30px; left: 2.5%; width: 95%; color: #fff"> Open Trades</div></div>
-        <div class = "" style = "height: 30px; background : #009ec2; width: 35%; display: inline-block; margin-left: 25px"><div class = "logo" style = "height: 30px; left: 2.9%; width: 93%; color: #fff; "> Celebrity News</div></div>
+<div class = "w3-section w3-card main-render-wrap">
+    <div class = "main-render-wrap-design"></div>
+    <div class = "w3-section activity-news-wrap">
+        <div class = "activity">
+            <div class = "activity-div"> <span>Open Trades</span></div>
+        </div>
+        <div class = "news">
+            <div class = "news-div"> <span>Celebrity News</span></div>
+        </div>
     </div>
-       <div class = "w3-section" style = "padding-left: 20px; padding-right : 20px">
-           <div class = "" style = "height: 100px; width: 60%; display: inline-block; overflow: scroll; height: 600px;">
+        <div class = "w3-section activity-news-wrap">
+            <div class = "activity-container scrollable">
             <table class = "w3-table w3-striped w3-bordered w3-centered w3-border w3-small">
                 <tr>
                     <th>Date</th>
                     <th>Action</th>
                     <th>Celebrity</th>
                     <th>Quantity</th>
-                    <th>Amount</th>
+                    <th>Price</th>
+                    <th>Profit/loss</th>
                     <th>Close</th>
                     <th>Set Stops</th>
                     <th>Set Take Profit</th>
@@ -22,8 +27,9 @@
                     <td>{{openTrade.typeofTrade}}</td>
                     <td>{{openTrade.celebrity}}</td>
                     <td>{{openTrade.volume}}</td>
-                    <td>{{openTrade.price}}</td>
-                    <td ng-click = "close(openTrade.typeofTrade, openTrade.celebrity, openTrade.volume, openTrade.tradeId)"><button class = "w3-btn w3-round-large w3-blue"> Close</button> </td>
+                    <td>N{{openTrade.price.toFixed(2)}}</td>
+                    <td>N{{openTrade.profit.toFixed(2)}}</td>
+                    <td ng-click = "close(openTrade.typeofTrade, openTrade.celebrity, openTrade.volume, openTrade.tradeId, openTrade.price)"><button class = "w3-btn w3-round-large w3-blue"> Close</button> </td>
                     <td ng-hide= "openTrade.stopLoss" ><button class = "w3-btn w3-round-large w3-blue" ng-click = " hideMe = false; storeValues(openTrade, 'stopLoss')" onclick =" document.getElementById('id01').style.display='block'">Set SL</button> </td>
                     <td ng-show= "openTrade.stopLoss">{{openTrade.stopLoss}} </td>
                     <td ng-hide = "openTrade.takeProfit" ><button class = "w3-btn w3-round-large w3-blue" ng-click = "hideMe = false; storeValues(openTrade, 'takeProfit');" onclick =" document.getElementById('id01').style.display='block'">Set TP</button> </td>
@@ -32,7 +38,7 @@
 
             </table>
         </div>
-        <div class = "w3-border" style = "height: 100px; width: 35%; display: inline-block; margin-left: 25px; position: relative; top: -500px;"></div>
+        <div class = "w3-border news-container"></div>
     </div>
     </div>
     

@@ -4,7 +4,14 @@ module.exports = mongoose.model('celebrity',{
     symbol : String,
     totalIssued : Number,
     totalOutstanding : Number,
-    shortInterest : Number,
+    shortInterest : [{
+        time : Date,
+        price : String,
+        tradeId : String,
+        typeofTrade : String,
+        quantity : Number,
+        userId : String
+    }],
     bid : Number,
     ask : Number,
     history: [{time: Date,

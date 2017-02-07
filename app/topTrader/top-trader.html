@@ -3,7 +3,7 @@
     <div class = "w3-section" style = "padding-left: 20px; padding-right : 20px">
     <div class = "w3-section activity-news-wrap">
         <div class = "activity">
-            <div class = "activity-div"> <span>Trade History</span></div>
+            <div class = "activity-div"> <span>Top Traders</span></div>
         </div>
         <div class = "news">
             <div class = "news-div"> <span>Celebrity News</span></div>
@@ -13,24 +13,20 @@
         <div class = "activity-container scrollable" style = "height: 500px">
             <table class = "w3-table w3-striped w3-bordered w3-centered w3-border w3-small">
                 <tr>
-                    <th>Date</th>
-                    <th>Action</th>
-                    <th>Celebrity</th>
-                    <th>Amount</th>
-                    <th>Price</th>
+                    <th>Rank</th>
+                    <th>Nick Name</th>
+                    <th>Return</th>
                 </tr>
-                <tr ng-repeat = "tradeHistory in trades">
-                    <td>{{tradeHistory.time}}</td>
-                    <td>{{tradeHistory.typeofTrade}}</td>
-                    <td>{{tradeHistory.celebrity}}</td>
-                    <td>{{tradeHistory.volume}}</td>
-                    <td>{{tradeHistory.price}}</td>
+                <tr ng-repeat = "topTrader in topTraders">
+                    <td>{{$index + 1}}</td>
+                    <td>{{topTrader.nickName}}</td>
+                    <td>{{topTrader.returns.toFixed(2)}}%</td>
                 </tr>
 
             </table>
 
         </div>
-        <div class = "w3-border news-container"></div>
+        <div class = "w3-border news-container" style = "height: 500px;"></div>
         </div>
     </div>
 

@@ -8,6 +8,39 @@ function ManageLifeTrades(celebrity, req){
     storeIfNegative = [];
 }
 
+ManageLifeTrades.prototype.shortInterest = function(userDataBase){
+    console.log("I ran in the short interest");
+    length = this.celebrity.shortInterest.length -1;
+    for(length; length >=0; length--){
+        if(this.celebrity.shortInterest[length].price * 2 == this.celebrity.ask && this.celebrity.stopLoss[length].typeofTrade == "short"){
+            
+           this.celebrity.history.push({
+                time : Date(),
+                lastPrice : this.celebrity.ask,
+                typeofTrade : celebrity.shortInterest[length].typeofTrade,
+                volume : parseInt(celebrity.shortInterest[length].quantity)
+            });
+
+            this.celebrity.theHouse.push({
+                time : Date(),
+                typeofTrade : celebrity.shortInterest[length].typeofTrade,
+                price : this.celebrity.ask,
+                volume : parseInt(celebrity.stopLoss[length].quantity)
+            });
+            
+            this.updateOpenTrades(this.req.userId, userDataBase, {
+                quantity : celebrity.shortInterest[length].quantity,
+                typeofTrade : celebrity.shortInterest[length].typeofTrade,
+                price : this.celebrity.shortInterest[length].price,
+                tradeId : celebrity.shortInterest[length].tradeId
+            }, caller);
+            this.celebrity.shortInterest.splice(index,1);
+        }
+    
+    }
+
+}
+
 ManageLifeTrades.prototype.stopLoss = function(userDataBase){
     console.log("I ran in the stop loss")
     length = this.celebrity.stopLoss.length -1;
@@ -215,7 +248,7 @@ ManageLifeTrades.prototype.updateOpenTrades = function(userId, userDataBase, req
     //removeStops(this.celebrity, this.req.userId, this.req.typeofTrade, this.req.tradeId);
     //removeTakeProfits(this.celebrity, this.req.userId, this.req.typeofTrade, this.req.tradeId);
     self = this;
-    userDataBase.findById(userId, function(error, userData){
+    userDataBase.findById(userId, function(error, userData, caller){
         if(error){
             console.log(error);
         } else {
@@ -227,14 +260,22 @@ ManageLifeTrades.prototype.updateOpenTrades = function(userId, userDataBase, req
                 volume : req.quantity
             });
             if(req.typeofTrade == "buy" || req.typeofTrade == "short"){
-                userData.accountValue = parseFloat(userData.accountValue) + parseFloat(req.price * req.quantity);
                 switch(req.typeofTrade){
                     case "buy" :
+                        userData.accountValue = parseFloat(userData.accountValue) + parseFloat(req.price * req.quantity);
                         checkSellandCover(userData, 'buy', self, req.tradeId);
                         removeStops(self.celebrity, userId, 'sell', req.tradeId);
                         removeTakeProfits(self.celebrity, userId, 'sell', req.tradeId);
                         break;
                     case "short" :
+                        if(self.celebrity.ask > req.price){
+                            value = parseFloat(self.celebrity.ask) * parseFloat(self.celebrity.quantity) - parseFloat(req.price) * parseFloat(req.quantity);
+                            userData.accountValue = parseFloat(userData.accountValue) - value;
+                            removeShortInterest(self.celebrity, self.req.userId, 'short', req.tradeId)
+                        } else {
+                            value = 2 * parseFloat(req.price) * parseFloat(req.quantity) - parseFloat(self.celebrity.ask) * parseFloat(self.celebrity.quantity);
+                            userData.accountValue = userData.accountValue + value;
+                        }
                         checkSellandCover(userData, 'short', self, req.tradeId);
                         removeStops(self.celebrity, self.req.userId, 'cover', req.tradeId);
                         removeTakeProfits(self.celebrity, self.req.userId, 'cover', req.tradeId);
@@ -278,15 +319,24 @@ checkSellandCover = function(userData, typeofTrade, self, tradeId){
         };
         userData.save();
         } else {
+        
+        var counter = 0;
         trade = userData.openTrades.filter(function(trades){
             if(trades.celebrity == self.req.celebrityName && trades.typeofTrade == typeofTrade){
                 
                 return trades;
             }
         }).map(function(filteredTrades){
-            return filteredTrades.volume;
+            return {
+                        volume : filteredTrades.volume,
+                        price : filteredTrades.price
+                   };
         }).reduce(function(mappedA, mappedB){
-            return parseInt(mappedA) + parseInt(mappedB);
+            return {
+                        volume : parseInt(mappedA.volume) + parseInt(mappedB.volume),
+                        price : parseFloat(mappedA.price) + parseFloat(mappedB.price),
+                        counter : counter++
+                   };
         });
         
         if(parseInt(trade) == parseInt(self.req.quantity)){
@@ -311,9 +361,9 @@ checkSellandCover = function(userData, typeofTrade, self, tradeId){
                 time : Date(),
                 tradeId : self.req.tradeId,
                 celebrity : self.celebrity.celebrityName,
-                price : self.req.price,
+                price : parseFloat(trade.volume)/trade.counter,
                 typeofTrade : typeofTrade,
-                volume : parseInt(trade) - parseInt(self.req.quantity)
+                volume : parseInt(trade.volume) - parseInt(self.req.quantity)
             })
 
 
@@ -356,8 +406,26 @@ removeTakeProfits = function(celebrity, userId, typeofTrade, tradeId){
     } else {
         length = celebrity.takeProfit.length -1;
         for (length; length >= 0; length--){
-            if(celebrity.takeProfit.userId == userId && celebrity.typeofTrade == typeofTrade && celebrity.stopLoss.tradeId == tradeId){
+            if(celebrity.takeProfit.userId == userId && celebrity.typeofTrade == typeofTrade && celebrity.takeProfit.tradeId == tradeId){
                 celebrity.takeProfit.splice(i,1);
+            }
+        }
+    }
+}
+
+removeShortInterest = function(celebrity, userId, typeofTrade, tradeId){
+    if(tradeId == null){
+        length = celebrity.shortInterest.length -1;
+        for (length; length >= 0; length--){
+            if(celebrity.shortInterest.userId == userId && celebrity.typeofTrade == typeofTrade){
+                celebrity.shortInterest.splice(i,1);
+            }
+        }
+    } else {
+        length = celebrity.shortInterest.length -1;
+        for (length; length >= 0; length--){
+            if(celebrity.shortInterest.userId == userId && celebrity.typeofTrade == typeofTrade && celebrity.shortInterest.tradeId == tradeId){
+                celebrity.shortInterest.splice(i,1);
             }
         }
     }

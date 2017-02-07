@@ -216,6 +216,7 @@ div.welcome-user {
     background : #fff;
     height : 700px;
     position : relative;
+    margin : 0 auto;
 }
 
 .main-render-wrap-design {
@@ -277,6 +278,10 @@ div.welcome-user {
     position : relative;
 }
 
+.scrollable {
+    overflow : scroll;
+}
+
 .tabs-container {
     top : -90px;
 }
@@ -294,4 +299,209 @@ span.most-active {
 
 .tabs {
     margin-left : 30px;
+}
+
+
+
+@media screen and (min-width : 1000px) and (max-width : 1200px){
+    
+    .main-render-wrap {
+        width : 90%;
+    }
+    .ul-container {
+    display : inline-block;
+    width : 100%;
+    }
+        
+    .dropdown {
+        padding : 9px 20px 20px 9px;
+    }
+    
+    .dropdown-content.last-child {
+	left: -80%;
+    }
+    
+    .logo {
+        width : 200px
+    }
+    
+    .realign {
+        margin-left : 10%;
+    }
+    
+    .activity-news-wrap {
+        padding-left : 10px;
+        padding -right : 10px;
+    }
+    
+    .tabs-container {
+        top : -90px;
+    }
+    
+    .tabs {
+        margin-left : 5px;
+    }
+    
+    #ul-celebrity-activity {
+        margin-left : -10%;
+    }
+    
+}
+
+@media screen and (min-width : 768px) and (max-width : 999px){
+    .main-render-wrap {
+        width : 95%;
+    }
+    .ul-container {
+        display : inline-block;
+        width : 100%;
+    }
+        
+    .dropdown {
+        padding : 9px 5px 5px 9px;
+    }
+    
+    .dropdown-content.last-child {
+	left: -140%;
+    }
+    
+    .logo {
+        width : 150px
+    }
+    
+    .realign {
+        margin-left : 2%;
+    }
+    
+    .activity-news-wrap {
+        padding-left : 5px;
+        padding -right : 5px;
+    }
+    
+    .tabs-container {
+        top : -90px;
+    }
+    
+    .tabs {
+        margin-left : 1px;
+    }
+    
+    #ul-celebrity-activity {
+        margin-left : -40px;
+    }
+    
+    .news-container {
+        margin-left : 15px;
+    }
+    
+    .news {
+        margin-left : 15px;
+    }
+    
+    .celebrity-activity {
+        margin-left : 0;
+        font-size : 13px;
+    }
+    
+}
+
+
+@media screen and (min-width : 740px) and (max-width : 767px){
+    .w3-quarter {
+        width : 25%;
+        display : inline-block;
+    }
+    
+    .w3-half {
+        width : 50%;
+        display : inline-block;
+    }
+    
+    .log-login {
+        display : inline-block;
+    }
+    
+    .realign {
+        margin-left : 0;
+    }
+    
+    .logo {
+        width : 100px;
+    }
+    
+    .authentication-area {
+        margin-top: 0;
+    }
+    
+    .short-it-login {
+        padding : 2px;
+    }
+    
+        .ul-container {
+        display : inline-block;
+        width : 100%;
+    }
+        
+    .dropdown {
+        padding : 9px 1px 5px 1px;
+        font-size : 12px;
+    }
+    
+    .dropdown-content.last-child {
+	   left: -140%;
+    }
+    
+        .tabs-container {
+        top : -90px;
+    }
+    
+    .tabs {
+        margin-left : 1px;
+    }
+    
+    #ul-celebrity-activity {
+        margin-left : -40px;
+    }
+    
+    .news-container {
+        margin-left : 15px;
+    }
+    
+    .news {
+        margin-left : 15px;
+    }
+    
+    .celebrity-activity {
+        margin-left : 0;
+        font-size : 13px;
+    }
+    
+}
+
+@media screen and (max-width: 739px){
+    .mainWrap {
+	   height: auto;
+    }
+    
+    .logo-login {
+	   height: auto;
+    }	
+
+    .logo {
+      height: auto;
+      width: auto;
+    }
+    
+    .middle {
+	   display : none;
+    }
+    
+    .dropdown {
+        padding : 1px 1px 1px 1px;
+        height: auto;
+    }
+    
+    .authentication-area {
+	margin-top : auto;
+}
 }

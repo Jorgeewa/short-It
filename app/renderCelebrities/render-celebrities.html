@@ -1,13 +1,17 @@
-<div class = "w3-content w3-section w3-card" style = "background : #fff; height : 700px; position: relative;">
-    <div style = "height : 30px; background: #00bce4;"></div>
-    <div class = "w3-section" style = "padding-left: 20px; padding-right : 20px">
-        <div class = "" style = "height: 30px; background : #009ec2; width: 60%; display: inline-block"><div class = "logo" style = "height: 30px; left: 2.5%; width: 95%; color: #fff"> Trade Celebrities</div></div>
-        <div class = "" style = "height: 30px; background : #009ec2; width: 35%; display: inline-block; margin-left: 25px"><div class = "logo" style = "height: 30px; left: 2.9%; width: 93%; color: #fff; "> Celebrity News</div></div>
+<div class = "w3-section w3-card main-render-wrap">
+    <div class = "main-render-wrap-design"></div>
+    <div class = "w3-section activity-news-wrap">
+        <div class = "activity">
+            <div class = "activity-div"> <span>Trade Celebrities</span></div>
+        </div>
+        <div class = "news">
+            <div class = "news-div"> <span>Celebrity News</span></div>
+        </div>
     </div>
     
-    <div class = "w3-section" style = "padding-left: 20px; padding-right : 20px">
-        <div class = "" style = "height: 100px; width: 60%; display: inline-block">
-            <table class = "w3-table w3-striped w3-bordered w3-centered w3-border">
+    <div class = "w3-section activity-news-wrap">
+        <div class = "activity-container">
+            <table class = "w3-table w3-striped w3-bordered w3-centered w3-border w3-small">
                 <tr class = "">
                     <th>Name</th>
                     <th>Symbol</th>
@@ -17,14 +21,14 @@
                 <tr ng-repeat = "celebrity in celebrities">
                     <td><a ui-sref = "celebrityView" ng-click = "celebrityName(celebrity.celebrityName)">{{celebrity.celebrityName}}</a></td>
                     <td><a ui-sref = "celebrityView">{{celebrity.symbol}}</a></td>
-                    <td>{{celebrity.history[celebrity.history.length-1].lastPrice}}</td>
+                    <td>{{celebrity.history[celebrity.history.length-1].lastPrice.toFixed(2)}}</td>
                     <td>Hello Darkness my old friend</td>
 
                 </tr>
 
             </table>
         </div>
-        <div class = "w3-border" style = "height: 100px; width: 35%; display: inline-block; margin-left: 25px"></div>
+        <div class = "w3-border news-container"></div>
         
     </div>
     
