@@ -23,11 +23,13 @@ module.exports.openTrades = function(req, res){
                         celebrity : trade.celebrity,
                         volume : trade.volume,
                         price : trade.price,
-                        profit : profits
+                        profit : profits,
+                        tradeId : trade.tradeId,
+                        stopLoss : trade.stopLoss,
+                        takeProfit : trade.takeProfit
                     })
                 })
 
-                console.log(openTrades);
                 res.json({
                     openTrades : openTrades
                 });

@@ -2,8 +2,6 @@ var Celebrity = require('../datasets/celebrity');
 
 module.exports.init = function(req, res){
     var celebrity = new Celebrity(req.body);
-    console.log(celebrity);
-    console.log(req.body);
     celebrity.save();
     
     res.json(req.body);
@@ -15,10 +13,10 @@ module.exports.getPrices = function(req, res){
         if(error){
             console.log(error);
         } else{
-            var price = results[0];
+            var celebrity = results[0];
+            console.log(celebrity)
             res.json({
-                bid : price.bid,
-                ask : price.ask
+                celebrity : celebrity
             })
         }
         

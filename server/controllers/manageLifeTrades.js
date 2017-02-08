@@ -338,7 +338,7 @@ checkSellandCover = function(userData, typeofTrade, self, tradeId){
                    };
         });
         
-        if(parseInt(trade) == parseInt(self.req.quantity)){
+        if(parseInt(trade.volume) == parseInt(self.req.quantity)){
             for(var i = userData.openTrades.length -1; i >= 0; i--){
                 
                 

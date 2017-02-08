@@ -43,10 +43,11 @@
             }
             
             $http.post('/api/price/get', {celebrityName : $window.celebrityName}).then(function(success){
-                console.log(success.data);
                 var bid, ask;
-                bid = success.data.bid;
-                ask = success.data.ask
+                bid = success.data.celebrity.bid;
+                ask = success.data.celebrity.ask;
+                $scope.profile = success.data.celebrity;
+                console.log($scope.profile);
                 console.log(typeof(bid), bid , "this is the bid type");
                 bidDisplay.html("N" + bid.toFixed(2) + "<br>" + "Bid");
                 askDisplay.html("N" + ask.toFixed(2) + "<br>" + "Ask");

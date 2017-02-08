@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var User = require('../datasets/users')
 var User = mongoose.model('User');
 var ManageLifeTrades = require('./manageLifeTrades');
+var Celebrity = require('../datasets/celebrity');
 
 module.exports.computeNewPrice = function(req, res){
     var quantity = req.body.quantity;
@@ -98,7 +99,7 @@ module.exports.updatePrice = function(req, res){
         results = results[0];
         if(req.body.typeofTrade == "sell" || req.body.typeofTrade == "short"){
             bid = req.body.price;
-            ask = bid - 0 + 2.02;
+            ask = parseFloat(bid) + 2.02;
             var totalOutstanding = parseInt(results.totalOutstanding) + parseInt(req.body.quantity);
             results.totalOutstanding = totalOutstanding;
         } else {
@@ -135,7 +136,7 @@ module.exports.updatePrice = function(req, res){
         });
         
         tradeIdIndex = results.history[results.history.length - 1]._id;
-        if(typeofTrade == 'short'){
+        if(req.body.typeofTrade == 'short'){
             results.shortInterest.push({
                 time : Date(),
                 price : req.body.price,
@@ -152,7 +153,7 @@ module.exports.updatePrice = function(req, res){
         manageLifeTrades.stopLoss(User);
         manageLifeTrades.takeProfit(User);
         manageLifeTrades.shockPrice(Date(), req);
-        manageLifetrades.shortInterest(User);
+        manageLifeTrades.shortInterest(User);
         
     })
     
@@ -171,7 +172,7 @@ module.exports.closeOpenTrade = function(req, res){
             randNumber = 0.001 * (percentageOfTotal * (Math.floor((Math.random() * 10) % 10)));
             percentageIncrement = (-0.2 * percentageOfTotal * percentageOfTotal) + (0.2 * percentageOfTotal) + randNumber;
         if(req.body.typeofTrade == "short"){
-            var totalOutstanding = parseInt(results.totalOutstanding) + parseInt(req.body.quantity);
+            var totalOutstanding = parseInt(results.totalOutstanding) - parseInt(req.body.quantity);
             results.ask = results.ask * (1 + percentageIncrement);
             results.bid = results.ask - 2.02;
             results.totalOutstanding = totalOutstanding;
@@ -198,9 +199,9 @@ module.exports.closeOpenTrade = function(req, res){
                 tradeId : req.body.tradeId
             }
         } else {
-            var totalOutstanding = parseInt(results.totalOutstanding) - parseInt(req.body.quantity);
+            var totalOutstanding = parseInt(results.totalOutstanding) + parseInt(req.body.quantity);
             results.bid = results.bid * (1-percentageIncrement);
-            results.ask = parseInt(results.bid) + 2.02;
+            results.ask = parseFloat(results.bid) + 2.02;
             results.totalOutstanding = totalOutstanding;
             var typeofTrade = 'sell';
             results.history.push({
@@ -254,8 +255,10 @@ module.exports.checkError = function(req, res){
 
 
 module.exports.setStopsTakeProfits = function(req, res){
+    console.log(req.body);
     Celebrity.find({celebrityName : req.body.celebrityName}, function(error, results){
         if(!error){
+            console.log('i ran', req.body)
             results = results[0];
             if(req.body.type == 'takeProfit'){
                 results.takeProfit.push({
@@ -291,8 +294,12 @@ module.exports.setStopsTakeProfits = function(req, res){
                             if(data.tradeId == req.body.tradeId){
                                 data.stopLoss = req.body.price;
                                 userData.save();
+                                console.log(data, "I set the stop loss for a trade", data.tradeId, req.body.tradeId);
+                                
                             }
                         })
+                        userData.save();
+                        console.log(userData.openTrades);
                     }
                 })
             }

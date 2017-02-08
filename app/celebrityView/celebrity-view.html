@@ -9,10 +9,10 @@
         </div>
     </div>
      <div class = "w3-section activity-news-wrap">
-         <div class = "activity-container"></div>
+         <div class = "activity-container w3-border" style= "height: 300px">{{profile.about}}</div>
         <div class = " news-container">
             <div class="w3-card-16 w3-round-xlarge w3-content" style="width:95%;" ng-init ="unHideMeSuccess = true; unHideMeError = true">
-                <img src="http://www.w3schools.com/w3css/img_avatar5.png" alt="Person" style="width:100%">
+                <img ng-src= "{{profile.image}}" alt="Person" style="width:100%; height : 100%">
                 <div class = "w3-container w3-card-4 w3-display-containter w3-black w3-border w3-padding-0" style =" width:100%; position: relative;">
                     <div class ="w3-row" style = "padding: 10px;">
                         <button class = " w3-half w3-round-large bidColorChange" style = " font-size: 12px;  background-color: red"><b class = "bid"><br>Bid</b></button>

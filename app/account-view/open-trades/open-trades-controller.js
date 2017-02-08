@@ -47,11 +47,12 @@
                 }).then(function(success){
                     bid = parseFloat(success.data.bid);
                     ask = parseFloat(success.data.ask);
-                    console.log(bid, ask, $scope.getPrice > ask);
-                    if((tradeDetails.typeofTrade == "buy" && $scope.getPrice > ask && buttonClicked == "takeProfit"
-                       || tradeDetails.typeofTrade == "buy" && $scope.getprice < bid && buttonClicked == "stopLoss")||
-                      (tradeDetails.typeofTrade == "short" && tradeDetails.price * 2 <= $scope.getPrice && buttonClicked == "takeProfit" ||
-                      tradeDetails.typeofTrade == "short" && $scope.getPrice < bid && buttonClicked == "stopLoss")){
+                    console.log(tradeDetails.typeofTrade, $scope.getPrice, bid, buttonClicked, tradeDetails.price);
+                    console.log(tradeDetails)
+                    if(((tradeDetails.typeofTrade == "buy" && $scope.getPrice > ask && buttonClicked == "takeProfit")
+                       || (tradeDetails.typeofTrade == "buy" && $scope.getPrice < bid && buttonClicked == "stopLoss"))||
+                      ((tradeDetails.typeofTrade == "short") && (tradeDetails.price * 2 >= $scope.getPrice) && (buttonClicked == "stopLoss") && $scope.getPrice > ask ||
+                      tradeDetails.typeofTrade == "short" && $scope.getPrice < bid && buttonClicked == "takeProfit")){
                         $http.post('/api/setStops&Takeprofits', {
                             celebrityName : tradeDetails.celebrity,
                             type : buttonClicked,
