@@ -78,6 +78,12 @@
             templateUrl : "app/topTrader/top-trader.html",
             controller : "TopTraderController"
         })
+        
+      $stateProvider
+      .state('forums', {
+           url: 'http://127.0.0.1:4567/',
+           external: true
+      })
     })
     
     //.service('$ticker', $ticker)
@@ -104,4 +110,14 @@
         }
       };
     })
+    
+    .run(function($rootScope, $window) {
+  $rootScope.$on('$stateChangeStart',
+    function(event, toState, toParams, fromState, fromParams) {
+      if (toState.external) {
+        event.preventDefault();
+        $window.open(toState.url, '_self');
+      }
+    });
+})
 }());

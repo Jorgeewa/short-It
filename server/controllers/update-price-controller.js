@@ -196,7 +196,8 @@ module.exports.closeOpenTrade = function(req, res){
                 price : results.ask,
                 celebrityName : req.body.celebrityName,
                 userId : req.body.userId,
-                tradeId : req.body.tradeId
+                tradeId : req.body.tradeId,
+                shortPrice : req.body.price
             }
         } else {
             var totalOutstanding = parseInt(results.totalOutstanding) + parseInt(req.body.quantity);

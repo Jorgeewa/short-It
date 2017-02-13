@@ -16,7 +16,13 @@
             }).catch(function(error){
                 console.log(error);
             })
-            
+            /*$http.post('/api/clients',{name : "create-and-login-user",
+                                      id : 'nodeBB_logIn',
+                                       secret: 'change_this_later'
+                                      
+                                      }).then(function(success){
+                console.log('george');
+            });*/
             
             $scope.openTab = function(activate){
                 var mostActive = angular.element(document.querySelector(".most-active"))[0];

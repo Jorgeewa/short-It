@@ -193,6 +193,25 @@ ManageLifeTrades.prototype.updateUserTradeHistory = function(userId, userDatabas
                         removeStops(self.celebrity, userId, 'cover');
                         removeTakeProfits(self.celebrity, userId, 'cover');
                         break;
+                        shortPrice = checkSellandCover(userData, 'short', self);
+                        removeStops(self.celebrity, userId, 'cover');
+                        removeTakeProfits(self.celebrity, userId, 'cover');
+                        removeShortInterest(self.celebrity, userId, 'short');
+                        
+                        if(self.celebrity.ask > shortPrice){
+                            value = parseFloat(self.celebrity.ask) * parseFloat(req.quantity) - parseFloat(shortPrice) * parseFloat(req.quantity);
+                            userData.accountValue = parseFloat(userData.accountValue) - value;
+                            console.log("if ran");
+                            userData.save();
+                        } else {
+                            value = 2 * parseFloat(shortPrice) * parseFloat(req.quantity) - parseFloat(self.celebrity.ask) * parseFloat(req.quantity);
+                            userData.accountValue = userData.accountValue + value;
+                            console.log("else ran");
+                            userData.save();
+                        }
+                        console.log(userData.openTrades, "george", userData.history[userData.history.length-1])
+                        userData.save();
+                        break;
                 }
                 
             } else {
@@ -252,13 +271,19 @@ ManageLifeTrades.prototype.updateOpenTrades = function(userId, userDataBase, req
         if(error){
             console.log(error);
         } else {
+            if(req.typeofTrade == "buy"){
+                typeofTrade = "sell"
+            } else {
+                typeofTrade = "cover"
+            }
             userData.history.push({
                 time : Date(),
                 celebrity : self.celebrity.celebrityName,
                 price : req.price,
-                typeofTrade : req.typeofTrade,
+                typeofTrade : typeofTrade,
                 volume : req.quantity
             });
+            userData.save();
             if(req.typeofTrade == "buy" || req.typeofTrade == "short"){
                 switch(req.typeofTrade){
                     case "buy" :
@@ -266,19 +291,29 @@ ManageLifeTrades.prototype.updateOpenTrades = function(userId, userDataBase, req
                         checkSellandCover(userData, 'buy', self, req.tradeId);
                         removeStops(self.celebrity, userId, 'sell', req.tradeId);
                         removeTakeProfits(self.celebrity, userId, 'sell', req.tradeId);
+                        console.log(userData.openTrades, "jorge", userData.history[userData.history.length-1])
+                        userData.save();
                         break;
                     case "short" :
-                        if(self.celebrity.ask > req.price){
-                            value = parseFloat(self.celebrity.ask) * parseFloat(self.celebrity.quantity) - parseFloat(req.price) * parseFloat(req.quantity);
-                            userData.accountValue = parseFloat(userData.accountValue) - value;
-                            removeShortInterest(self.celebrity, self.req.userId, 'short', req.tradeId)
-                        } else {
-                            value = 2 * parseFloat(req.price) * parseFloat(req.quantity) - parseFloat(self.celebrity.ask) * parseFloat(self.celebrity.quantity);
-                            userData.accountValue = userData.accountValue + value;
-                        }
                         checkSellandCover(userData, 'short', self, req.tradeId);
-                        removeStops(self.celebrity, self.req.userId, 'cover', req.tradeId);
-                        removeTakeProfits(self.celebrity, self.req.userId, 'cover', req.tradeId);
+                        removeStops(self.celebrity, userId, 'cover', req.tradeId);
+                        removeTakeProfits(self.celebrity, userId, 'cover', req.tradeId);
+                        removeShortInterest(self.celebrity, userId, 'short', req.tradeId);
+                        userData.save();
+                        
+                        if(self.celebrity.ask > req.shortPrice){
+                            value = parseFloat(self.celebrity.ask) * parseFloat(req.quantity) - parseFloat(req.shortPrice) * parseFloat(req.quantity);
+                            userData.accountValue = parseFloat(userData.accountValue) - value;
+                            console.log("if ran");
+                            userData.save();
+                        } else {
+                            value = 2 * parseFloat(req.shortPrice) * parseFloat(req.quantity) - parseFloat(self.celebrity.ask) * parseFloat(req.quantity);
+                            userData.accountValue = userData.accountValue + value;
+                            console.log("else ran");
+                            userData.save();
+                        }
+                        console.log(userData.openTrades, "george", userData.history[userData.history.length-1])
+                        userData.save();
                         break;
                 }
                 
@@ -315,6 +350,8 @@ checkSellandCover = function(userData, typeofTrade, self, tradeId){
         for(var i = userData.openTrades.length -1; i >= 0; i--){
             if(userData.openTrades[i].celebrity == self.req.celebrityName && userData.openTrades[i].typeofTrade == typeofTrade && userData.openTrades[i].tradeId == tradeId){
                 userData.openTrades.splice(i, 1);
+
+                userData.save();
             }
         };
         userData.save();
@@ -368,6 +405,7 @@ checkSellandCover = function(userData, typeofTrade, self, tradeId){
 
         }
         userData.save();
+        return trade.volume;
     }
 }
 
@@ -412,20 +450,62 @@ removeTakeProfits = function(celebrity, userId, typeofTrade, tradeId){
     }
 }
 
+//remove shortInterest should look like checkSellandCover update userTradeHistory should incorporate short logic
 removeShortInterest = function(celebrity, userId, typeofTrade, tradeId){
-    if(tradeId == null){
-        length = celebrity.shortInterest.length -1;
-        for (length; length >= 0; length--){
-            if(celebrity.shortInterest.userId == userId && celebrity.typeofTrade == typeofTrade){
-                celebrity.shortInterest.splice(i,1);
+    if(tradeId){
+        for(var i = celebrity.shortInterest.length -1; i >= 0; i--){
+            if(celebrity.shortInterest[i].userId == userId && celebrity.shortInterest[i].typeofTrade == typeofTrade && celebrity.shortInterest[i].tradeId == tradeId){
+                celebrity.shortInterest.splice(i, 1);
+
+                celebrity.save();
             }
-        }
-    } else {
-        length = celebrity.shortInterest.length -1;
-        for (length; length >= 0; length--){
-            if(celebrity.shortInterest.userId == userId && celebrity.typeofTrade == typeofTrade && celebrity.shortInterest.tradeId == tradeId){
-                celebrity.shortInterest.splice(i,1);
+        };
+        celebrity.save();
+        } else {
+        
+        trade = celebrity.shortInterest.filter(function(trades){
+            if(celebrity.shortInterest[i].userId == userId && celebrity.shortInterest[i].typeofTrade == typeofTrade){
+                
+                return trades;
             }
+        }).map(function(filteredTrades){
+            return {
+                        volume : filteredTrades.quantity,
+                        price : filteredTrades.price
+                   };
+        }).reduce(function(mappedA, mappedB){
+            return {
+                        volume : parseInt(mappedA.volume) + parseInt(mappedB.volume),
+                        price : (parseFloat(mappedA.volume * mappedA.price) + parseFloat(mappedB.volume * mappedB.price))/(parseInt(mappedA.volume) + parseInt(mappedB.volume)),
+                   };
+        });
+            
+        if(parseInt(trade.volume) == parseInt(self.req.quantity)){
+            for(var i = celebrity.shortInterest.length -1; i >= 0; i--){
+                if(celebrity.shortInterest[i].userId == userId && celebrity.shortInterest[i].typeofTrade == typeofTrade){
+                    celebrity.shortInterest.splice(i, 1);
+                }
+            };
+        celebrity.save();
+        } else {
+            for(var i = celebrity.shortInterest.length -1; i >= 0; i--){
+                if(celebrity.shortInterest[i].userId == userId && celebrity.shortInterest[i].typeofTrade == typeofTrade){
+                    celebrity.shortInterest.splice(i, 1);
+                }
+            };
+            celebrity.save();
+            
+            celebrity.shortInterest.push({
+                time : Date(),
+                tradeId : tradeId,
+                userId : userId,
+                price : (trade.price * trade.volume - self.req.quantity * self.req.price)/(trade.volume - self.req.quantity),
+                typeofTrade : typeofTrade,
+                volume : parseInt(trade.volume) - parseInt(self.req.quantity)
+            })
+
+
         }
+        celebrity.save();
     }
 }
