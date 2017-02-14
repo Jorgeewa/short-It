@@ -1,0 +1,41 @@
+var moment = require('moment');
+var Celebrity = require('../datasets/celebrity');
+
+module.exports.render = function (req, res){
+  
+  Celebrity.find()
+	.exec(function(error, celebrities){
+		if(!error){
+			celebrityData = [];
+			celebrities.forEach(function(celebrity)){
+				celebrityDetails = {};
+				tradesToday = celebrity.filter(function(result){
+					return moment(result.history.time).diff(moment(Date()), 'd') = 0;
+				});
+				
+				quantity = tradesToday.map(function(result){
+					return result.quantity
+				}).reduce(function(quantityA, quantityB){
+					return quantityA + quantityB;
+				});
+			
+				lastPrice = tradesToday.history[tradeToday.history.length - 1].lastPrice;
+				openingPrice = tradesToday.history[0].lastPrice
+				celebrityData.push(celebrity.celebrityName = {
+					openingPrice . openingPrice,
+					lastPrice : lastPrice,
+					totalQuantityToday : quantity,
+					count : tradesToday.history.length,
+					totalValueTraded : quantity * lastPrice,
+					percentageChange : ((lastPrice - openingPrice) / openingPrice) * 100;
+				});
+				
+			}
+			
+			res.json({
+				celebrityData : celebrityData;
+			})
+		}
+	})
+
+}
