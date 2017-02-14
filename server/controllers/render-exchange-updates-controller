@@ -8,7 +8,6 @@ module.exports.render = function (req, res){
 		if(!error){
 			celebrityData = [];
 			celebrities.forEach(function(celebrity)){
-				celebrityDetails = {};
 				tradesToday = celebrity.filter(function(result){
 					return moment(result.history.time).diff(moment(Date()), 'd') = 0;
 				});
@@ -21,8 +20,9 @@ module.exports.render = function (req, res){
 			
 				lastPrice = tradesToday.history[tradeToday.history.length - 1].lastPrice;
 				openingPrice = tradesToday.history[0].lastPrice
-				celebrityData.push(celebrity.celebrityName = {
-					openingPrice . openingPrice,
+				celebrityData.push({
+					celebrityName : celebrity.celebrityName,
+					openingPrice : openingPrice,
 					lastPrice : lastPrice,
 					totalQuantityToday : quantity,
 					count : tradesToday.history.length,
