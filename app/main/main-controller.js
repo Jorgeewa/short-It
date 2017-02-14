@@ -10,9 +10,25 @@
                 $scope.loggedOut = false;
                 }
             
-            $http.get('/main').then(function(success){
+            $http.get('/api/exchange/updates').then(function(success){
                 console.log(success);
-                $scope.newsItems = success.data.slice(0,12);
+                marketActivityData = success.data;             
+                var getTopFive = function(topFive, key){
+                    sorted = topFive.sort(function(a, b){return b.key - a.key});
+                        return sorted.slice(0 ,5);
+                };
+                
+                var getLastFive = function(lastFive, key){
+                    sorted = topFive.sort(function(a, b){return a.key - b.key});
+                        return sorted.slice(0 ,5);
+                };
+                
+                $scope.marketActivityCelebrities = getTopFive(marketActivityData, totalValueTraded);
+                $scope.mostActiveCelebrities = getTopFive(marketActivityData, count);
+                $scope.mostAdvancedCelebrities = getTopFive(marketActivityData, percentageChange);
+                $scope.mostDeclinedCelebrities = getLastFive(marketActivityData, percentageChange);
+                $scope.unusualVolumeCelebrities = getTopFive(marketActivityData, totalQuantityToday)
+                
             }).catch(function(error){
                 console.log(error);
             })
