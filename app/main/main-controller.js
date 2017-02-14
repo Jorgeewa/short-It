@@ -12,7 +12,7 @@
             
             $http.get('/api/exchange/updates').then(function(success){
                 console.log(success);
-                marketActivityData = success.data;             
+                marketActivityData = success.data.celebrityData;             
                 var getTopFive = function(topFive, key){
                     sorted = topFive.sort(function(a, b){return b.key - a.key});
                         return sorted.slice(0 ,5);
