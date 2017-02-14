@@ -27,6 +27,7 @@ var getTopTraders = require('./server/controllers/get-top-traders-controller');
 var clientController = require('./server/controllers/client')
 var oauth2Controller = require('./server/controllers/oauth2');
 var authentication = require('./server/controllers/auth');
+var renderExchangeActivity = require('./server/controllers/render-exchange-updates-controller');
 
 mongoose.connect('mongodb://localhost:27017/shortIt');
 //mongoose.connect('mongodb://heroku_6j09bfdg:58r3cd70mq1om5cd9hju6fk87r@ds041586.mlab.com:41586/heroku_6j09bfdg');
@@ -79,6 +80,9 @@ app.get('/api/view/top-trader', getTopTraders.topTraders);
 
 //render news on main page
 app.get('/main', renderCelebrityNews.render);
+
+//act like a real exchange bro display recent activities of celebrities
+app.get('/api/exchange/updates', renderExchangeActivity.render);
 
 //to work with nodebb
 app.post('/api/clients', authentication.isAuthenticated, clientController.postClients);
