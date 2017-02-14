@@ -17,17 +17,11 @@
                     <th>Value</th>
                     <th>Change Net</th>
                 </tr>
-                <tr>
-                    <td>Celebrity</td>
-                    <td>Value</td>
-                    <td>Change Net</td>
+                <tr ng-repeat = "marketActivityCelebrity in marketActivityCelebrities">
+                    <td>{{marketActivityCelebrity.celebrityName}}</td>
+                    <td>{{marketActivityCelebrity.totalValueTraded}}</td>
+                    <td>{{marketActivityCelebrity.percentageChange}}</td>
                 </tr> 
-                <tr>
-                    <td>Celebrity</td>
-                    <td>Value</td>
-                    <td>Change Net</td>
-                </tr>
-            
             </table>
         </div>
         <div class = "w3-border news-container"></div>
@@ -58,19 +52,12 @@
                     <th>Change Net</th>
                     <th>Share volume</th>
                 </tr>
-                <tr>
-                    <td>Passenger</td>
-                    <td>Last Sale</td>
-                    <td>Change Net</td>
-                    <td>Share volume</td>
+                <tr ng-repeat = "mostActiveCelebrity in mostActiveCelebrities">
+                    <td>{{mostActiveCelebrity.celebrityName}}</td>
+                    <td>{{marketActivityCelebrity.lastPrice}</td>
+                    <td>{{marketActivityCelebrity.percentageChange}}</td>
+                    <td>{{marketActivityCelebrity.totalQuantityToday}}</td>
                 </tr> 
-                <tr>
-                    <td>Passenger</td>
-                    <td>Last Sale</td>
-                    <td>Change Net</td>
-                    <td>Share volume</td>
-                </tr>
-            
             </table>
         </div>
         <div class = "tabs activeTabTwo" ng-show = "activeTabTwo" >
@@ -81,19 +68,12 @@
                     <th>Change Net</th>
                     <th>Share volume</th>
                 </tr>
-                <tr>
-                    <td>tuFace</td>
-                    <td>Last Sale</td>
-                    <td>Change Net</td>
-                    <td>Share volume</td>
-                </tr> 
-                <tr>
-                    <td>Olamide</td>
-                    <td>Last Sale</td>
-                    <td>Change Net</td>
-                    <td>Share volume</td>
+                <tr ng-repeat = "mostAdvancedCelebrity in mostAdvancedCelebrities">
+                    <td>{{mostAdvancedCelebrity.celebrityName}}</td>
+                    <td>{{mostAdvancedCelebrity.lastPrice}</td>
+                    <td>{{mostAdvancedCelebrity.percentageChange}}</td>
+                    <td>{{mostAdvancedCelebrity.totalQuantityToday}}</td>
                 </tr>
-            
             </table>
         </div>
         <div class = "tabs activeTabThree" ng-show = "activeTabThree" >
@@ -104,19 +84,12 @@
                     <th>Change Net</th>
                     <th>Share volume</th>
                 </tr>
-                <tr>
-                    <td>Don Jazzy</td>
-                    <td>Last Sale</td>
-                    <td>Change Net</td>
-                    <td>Share volume</td>
+                <tr ng-repeat = "mostDeclinedCelebrity in mostDeclinedCelebrities">
+                    <td>{{mostDeclinedCelebrity.celebrityName}}</td>
+                    <td>{{mostDeclinedCelebrity.lastPrice}</td>
+                    <td>{{mostDeclinedCelebrity.percentageChange}}</td>
+                    <td>{{mostDeclinedCelebrity.totalQuantityToday}}</td>
                 </tr> 
-                <tr>
-                    <td>Olamide</td>
-                    <td>Last Sale</td>
-                    <td>Change Net</td>
-                    <td>Share volume</td>
-                </tr>
-            
             </table>
         </div>
             
@@ -128,19 +101,12 @@
                     <th>Change Net</th>
                     <th>Share volume</th>
                 </tr>
-                <tr>
-                    <td>Olamide</td>
-                    <td>Last Sale</td>
-                    <td>Change Net</td>
-                    <td>Share volume</td>
-                </tr> 
-                <tr>
-                    <td>tuFace</td>
-                    <td>Last Sale</td>
-                    <td>Change Net</td>
-                    <td>Share volume</td>
-                </tr>
-            
+                <tr ng-repeat = "unusualVolumeCelebrity in unusualVolumeCelebrities">
+                    <td>{{unusualVolumeCelebrity.celebrityName}}</td>
+                    <td>{{unusualVolumeCelebrity.lastPrice}</td>
+                    <td>{{unusualVolumeCelebrity.percentageChange}}</td>
+                    <td>{{unusualVolumeCelebrity.totalQuantityToday}}</td>
+                </tr>  
             </table>
         </div>
         </div>
