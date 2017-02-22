@@ -42,7 +42,14 @@ module.exports = mongoose.model('celebrity',{
         time : Date,
         typeofTrade : String,
         price : Number,
-        volume : Number,
-        shockPriceTime : Date
+        volume : Number
+    }],
+    
+    shockPriceTime : Date,
+    storeIfNegative : [{
+        time : Date,
+        typeofTrade : String,
+        price : Number,
+        volume : Number
     }]
 });
