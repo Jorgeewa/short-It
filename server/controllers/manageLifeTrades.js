@@ -110,21 +110,21 @@ ManageLifeTrades.prototype.takeProfit = function(){
 
 ManageLifeTrades.prototype.shockPrice = function(time, req){
     //this function needs to execute every xhours I would go with 4 hours
-    if(!this.celebrity.theHouse.shockPriceTime){
-        this.celebrity.theHouse.shockPriceTime = time;
+    if(!this.celebrity.shockPriceTime){
+        this.celebrity.shockPriceTime = time;
         this.celebrity.save();
         return 0;
     }
-    if(moment(time).diff(moment(this.celebrity.theHouse.shockPriceTime, 'h') >= 4)){
-        this.celebrity.theHouse.shockPriceTime = time;
+    if(moment(time).diff(moment(this.celebrity.shockPriceTime, 'h') >= 4)){
+        this.celebrity.shockPriceTime = time;
         this.celebrity.save();
         this.celebrity.theHouse.filter(function(trade){
-            if(moment(trade.time).diff(moment(time), 'h') >= 4 && trade.typeofTrade === "buy"){
-                this.storeIfNegative.push(trade)
+            if(moment(trade.time).diff(moment(time), 'h') <= 4 && trade.typeofTrade === "buy"){
+                this.celebrity.storeIfNegative.push(trade)
             }
         });
         
-        var value = this.storeIfNegative.reduce(function(firstValue, secondValue){
+        var value = this.celbrity.storeIfNegative.reduce(function(firstValue, secondValue){
             value = (firstValue.price * firstValue.volume) + (secondValue.price * secondValue.volume);
             totalVolume = firstValue.volume + secondValue.volume
             return {
@@ -140,8 +140,10 @@ ManageLifeTrades.prototype.shockPrice = function(time, req){
         totalValue = avgPrice * value.volume;
         currentValue = this.celebrity.history[this.celebrity.history.length - 1].lastPrice * value.volume;
 
-        if(totalValue > currentValue)
-            return this.storeIfNegative = [];
+        if(totalValue > currentValue){
+            this.theHouse = [];
+            return this.celebrity.storeIfNegative = [];
+        }
         else {
             if(currentValue/totalValue < 2)
                 return this.storeIfNegative;
